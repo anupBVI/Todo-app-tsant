@@ -1,5 +1,5 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Col, Row } from "antd";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Col, Row } from "antd";
 import React from "react";
 import Icon from "../Icons/Icon";
 
@@ -15,14 +15,32 @@ type CardProps = {
   handleDelete: (id: string) => void;
   handleEdit: (id: string) => void;
   handleComplete: (id: string) => void;
-  
+  setOpen: any;
 };
 
 const Card = (props: CardProps) => {
-  const { data, icon, handleDelete, handleEdit, handleComplete} = props;
+  const { data, icon, handleDelete, handleEdit, handleComplete, setOpen } =
+    props;
   return (
     <Row gutter={[12, 12]} className="row-wrapper">
-      {data.length == 0 && <h5>No Tasks Available </h5>}
+      {data.length == 0 && (
+        <>
+          <div style={{ display: "flex", flexDirection:"column", gap: "14px" }}>
+            <h5>No Tasks Available </h5>
+           
+
+            <Button
+              onClick={() => {
+                setOpen(true);
+              }}
+              icon={<PlusOutlined />}
+            >
+              {" "}
+              ADD COLLECTION
+            </Button>
+          </div>
+        </>
+      )}
       {data.map((item, index) => {
         return (
           <Col
@@ -58,7 +76,7 @@ const Card = (props: CardProps) => {
               </div>
               <Row>
                 <Col span={2} offset={22}>
-                  <span>
+                  {/* <span>
                     <EditOutlined
                       onClick={() => {
                         handleComplete(item.id);
@@ -66,7 +84,7 @@ const Card = (props: CardProps) => {
                       }}
                       style={{ color: "blue", fontSize: "1.1rem" }}
                     />
-                  </span>
+                  </span> */}
                   <span>
                     <EditOutlined
                       onClick={() => {

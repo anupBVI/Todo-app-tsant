@@ -27,6 +27,7 @@ interface TodosProps {
   handleEdit: (id: string) => void;
   handleComplete: (id: string) => void;
   show: boolean;
+  setOpen:any
 }
 
 const Todos = (props: TodosProps) => {
@@ -39,9 +40,10 @@ const Todos = (props: TodosProps) => {
     handleComplete,
     show,
     icon,
+    setOpen
   } = props;
   const Head = (
-    <span style={{ fontSize: "1.1rem", color: "#424242" }}> {category}</span>
+    <span style={{ fontSize: "1.1rem", color: "#424242" }}> {category} ({data.length}) </span>
   );
 
   return (
@@ -61,6 +63,7 @@ const Todos = (props: TodosProps) => {
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}
                 handleComplete={handleComplete}
+                setOpen={setOpen}
               />
             </Panel>
           </Collapse>
