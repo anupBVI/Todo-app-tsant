@@ -1,77 +1,22 @@
 import React, { ChangeEvent, FC, FormEvent, useRef, useState } from "react";
 import styled from "styled-components";
-// import { v4 as uuidv4 } from 'uuid';
 import { v4 as uuidv4 } from "uuid";
-
-import {
-  Row,
-  Form,
-  Col,
-  Input,
-  Button,
-  Checkbox,
-  Modal,
-  Descriptions,
-  Select,
-  Collapse,
-} from "antd";
+import { Row, Form, Col, Input, Button, Modal, Select, Collapse } from "antd";
 import {
   GlobalOutlined,
-  DownOutlined,
-  UserOutlined,
-  UnlockOutlined,
   PlusOutlined,
-  LaptopOutlined,
-  MailOutlined,
-  NodeCollapseOutlined,
-  NotificationOutlined,
-  ReadOutlined,
-  ForkOutlined,
-  DatabaseFilled,
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import Todos from "../../components/Todos";
 import { StyledContainer } from "../../styles/Styles";
 import Header from "../../components/Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import type { FormInstance } from "antd/es/form";
-import { icons } from "antd/es/image/PreviewGroup";
-import useItems from "antd/es/menu/hooks/useItems";
-import { data } from "./../../components/TestData";
-import Item from "antd/es/list/Item";
-
-export interface IData {
-  categoryN: string;
-  icon: React.ReactNode;
-  actualData: {
-    id: string;
-    title: string;
-    description: string;
-    url: string;
-    isCompleted: boolean;
-  }[];
-}
-
-interface INew {
-  categoryN: string;
-  icon: string;
-  datas: {
-    id: string;
-    title: string;
-    description: string;
-    url: string;
-    isCompleted: boolean;
-  }[];
-}
+import Todo from "../../components/Todo";
+import { IData } from "../../Interfaces/Interface";
+import { NavData } from "../../Data/Data";
 
 const Home2: FC = () => {
-  const { Panel } = Collapse;
-
-  // const formRef1 = React.createRef<FormInstance>();
-  // const formRef2 = React.createRef<FormInstance>();
   const { Option } = Select;
 
   const InitialData = [
@@ -90,23 +35,20 @@ const Home2: FC = () => {
     },
   ];
 
-  // const [form1] = Form.useForm();
   const [form] = Form.useForm();
   const [form2] = Form.useForm();
-  const [loading, setLoading] = useState(false);
-  const [updateBtn, setUpdateBtn] = useState(false);
 
+  const [updateBtn, setUpdateBtn] = useState(false);
   const [taskToUpdate, setTaskToUpdate] = useState("");
   const [catToUpdate, setCatToUpdate] = useState("");
+
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState<IData[]>(InitialData);
   const [open2, setOpen2] = useState(false);
 
-  const [categoryList, setCategoryList] = useState(
-    data.map((item) => {
-      return { name: item.categoryN, icon: item.icon };
-    })
-  );
+  const [data, setData] = useState<IData[]>(InitialData);
+
+  // ::::::::::::::::::::::::::::::::::::::::::  MODAL  1  ::::::::::::::::::::::::::::::::::::::::::::::
 
   const handleOk = () => {
     alert("OK clicked");
@@ -126,7 +68,10 @@ const Home2: FC = () => {
   const showModal = () => {
     setOpen(true);
   };
-  // :::::::::::::::::::::::::::::::::::::::::: NEW MODAL   ::::::::::::::::::::::::::::::::::::::::::::::
+
+  // :::::::::::::::::::::::::::::::::::::::::: MODAL 1  ::::::::::::::::::::::::::::::::::::::::::::::
+
+  // :::::::::::::::::::::::::::::::::::::::::: MODAL 2  ::::::::::::::::::::::::::::::::::::::::::::::
   const handleOk2 = () => {
     alert("OK clicked");
     setLoading(true);
@@ -206,7 +151,9 @@ const Home2: FC = () => {
   const onFinishFailed2 = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-  // :::::::::::::::::::::::::::::::::::::::::: NEW MODAL   ::::::::::::::::::::::::::::::::::::::::::::::
+  // :::::::::::::::::::::::::::::::::::::::::: MODAL 2  ::::::::::::::::::::::::::::::::::::::::::::::
+
+  // :::::::::::::::::::::::::::::::::::::::::: TOAST MESSAGE   ::::::::::::::::::::::::::::::::::::::::::::::
 
   const notifySuccess = (x: string) =>
     toast.success(x, {
@@ -220,44 +167,84 @@ const Home2: FC = () => {
       theme: "light",
     });
 
+  // :::::::::::::::::::::::::::::::::::::::::: TOAST MESSAGE   ::::::::::::::::::::::::::::::::::::::::::::::
+
+  // :::::::::::::::::::::::::::  ADD COLLECTION FORM  ::::::::::::::::::::::::::::::::::::::::::
   const onFinish = (values: any) => {
-    const { title, description, category, url } = values;
     console.log("Success:", values);
     console.log("new form submitting");
-    const xd = data.find((x) => x.categoryN === values.category);
-    console.log(xd);
 
-    // setData(
-    //   data.map((item) => {
-    //     if (item === xd) {
-    //      return{
-    //       ...item.actualData,
-    //       title: values.title,
-    //       description: values.description,
-    //       url: values.url,
-    //       isCompleted: dataItem.isCompleted,
-    //      }
-    //     }
-    //     return item;
-    //   })
-    // );
-
-    if (!updateBtn) {
-      const id = {
-        id: uuidv4(),
-        isCompleted: false,
-        ...values,
-      };
-
-      setData([...data, id]);
-      form.resetFields();
-      notifySuccess("Task Added SuccessFully");
-
-      setTimeout(() => {
-        handleCancel();
-      }, 100);
+    if (values.category == undefined) {
+      form.setFieldsValue({
+        category: "Others",
+        title: values.title,
+        description: values.description,
+        url: values.url,
+      });
     }
+
+   
+    setData((prevState) => {
+      // Create a new object that will replace the previous state
+      const newState = [...prevState];
+      // Find the index of the category in the newState array
+      const categoryIndex = newState.findIndex(
+        (cat) => cat.categoryN === values.category
+      );
+
+      console.log(categoryIndex);
+
+      // Check if the category exists in the newState array
+      if (categoryIndex !== -1) {
+        // If the category exists, add the new data to the actualData array
+        newState[categoryIndex].actualData.push({
+          id: uuidv4(),
+          title: values.title,
+          description: values.description,
+          url: values.url,
+          isCompleted: false,
+        });
+      } else {
+        // const nbv =
+        // If the category does not exist, add a new category with the new data
+        newState.push({
+          categoryN: values.category,
+          icon: (
+            <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
+          ),
+          actualData: [
+            {
+              id: uuidv4(),
+              title: values.title,
+              description: values.description,
+              url: values.url,
+              isCompleted: false,
+            },
+          ],
+        });
+        setCategoryList([
+          ...categoryList,
+          {
+            name: "Others",
+            icon: (
+              <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
+            ),
+          },
+        ]);
+      }
+
+      // Return the new state object
+      return newState;
+    });
+
+    form.resetFields();
+    notifySuccess("Task Added SuccessFully");
+
+    setTimeout(() => {
+      handleCancel();
+    }, 100);
   };
+  // :::::::::::::::::::::::::::  ADD COLLECTION FORM  ::::::::::::::::::::::::::::::::::::::::::
 
   console.log(data);
 
@@ -266,17 +253,11 @@ const Home2: FC = () => {
   };
 
   const handleEdit2 = (c: string, id: string) => {
-    console.log("edit button clicked");
-    console.log(c);
-    console.log(id);
-
     setUpdateBtn(true);
     setCatToUpdate(c);
     setTaskToUpdate(id);
-
     const xx = data.find((x) => x.categoryN === c);
     const yy = xx?.actualData.find((x) => x.id === id);
-
     showModal2();
 
     form2.setFieldsValue({
@@ -309,16 +290,23 @@ const Home2: FC = () => {
     notifySuccess("Task Deleted SuccessFully");
   };
 
-  // const handleComplete = (id: string) => {
-  //   console.log(id);
-  //   const xx = data.find((x) => x.id === id);
-  // };
+  const [categoryList, setCategoryList] = useState(
+    data.map((item) => {
+      return { name: item.categoryN, icon: item.icon };
+    })
+  );
+
+  console.log(categoryList);
 
   return (
     <StyledContainer className="">
       <Header />
       <ToastContainer />
       <Row gutter={[3, 12]} className="row-wrapper-nav">
+
+        {/* {
+          NavData.map((item , index))
+        } */}
         <Col className="gutter-row" lg={3} md={3} sm={2} xs={2}>
           <div className="content">DRAG & DROP </div>
         </Col>
@@ -334,6 +322,7 @@ const Home2: FC = () => {
         <Col className="gutter-row" lg={3} md={3} sm={2} xs={2}>
           <div className="content">COLLAPSE</div>
         </Col>
+
         <Col className="gutter-row" lg={4} md={3} sm={2} xs={2}>
           <div className="content">
             <Button onClick={showModal2} icon={<PlusOutlined />}>
@@ -351,7 +340,6 @@ const Home2: FC = () => {
                 <Col className="gutter-row" lg={24} md={24} sm={16} xs={24}>
                   <div className="content">
                     <Form
-                      // ref={formRef1}
                       form={form2}
                       labelCol={{ span: 24 }}
                       wrapperCol={{ span: 24 }}
@@ -376,7 +364,6 @@ const Home2: FC = () => {
                       )}
 
                       <Form.Item
-                        // style={{ display: "none" }}
                         name="title"
                         label="Title"
                         // rules={[
@@ -389,19 +376,11 @@ const Home2: FC = () => {
                         <Input />
                       </Form.Item>
 
-                      <Form.Item
-                        // style={{ display: "none" }}
-                        name="description"
-                        label="Description"
-                      >
+                      <Form.Item name="description" label="Description">
                         <Input.TextArea />
                       </Form.Item>
 
-                      <Form.Item
-                        // style={{ display: "none" }}
-                        name="url"
-                        label="URL"
-                      >
+                      <Form.Item name="url" label="URL">
                         <Input />
                       </Form.Item>
 
@@ -428,16 +407,6 @@ const Home2: FC = () => {
                           </Form.Item>
                         </Col>
                       </Row>
-
-                      {/* <Row gutter={12}>
-                        <Col span={6}>
-                          <Form.Item wrapperCol={{ span: 24 }}>
-                            <Button type="primary" block htmlType="submit">
-                              {updateBtn ? "Update" : "Save"}
-                            </Button>
-                          </Form.Item>
-                        </Col>
-                      </Row> */}
                     </Form>
                   </div>
                 </Col>
@@ -450,7 +419,7 @@ const Home2: FC = () => {
           <div className="content">
             <Button onClick={showModal} icon={<PlusOutlined />}>
               {" "}
-              ADD COLLECTION
+              ADD TASK
             </Button>
 
             <Modal
@@ -463,7 +432,6 @@ const Home2: FC = () => {
                 <Col className="gutter-row" lg={24} md={24} sm={16} xs={24}>
                   <div className="content">
                     <Form
-                      // ref={formRef2}
                       form={form}
                       labelCol={{ span: 24 }}
                       wrapperCol={{ span: 24 }}
@@ -488,13 +456,14 @@ const Home2: FC = () => {
                       <Form.Item
                         name="category"
                         label="Category"
-                        // rules={[{ required: true }]}
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please Select any category!",
+                          },
+                        ]}
                       >
-                        <Select
-                          placeholder="Select a category"
-                          // onChange={onGenderChange}
-                          allowClear
-                        >
+                        <Select placeholder="Select a category" allowClear>
                           {categoryList.map((item, index) => (
                             <Option key={index} value={item.name}>
                               {item.name}
@@ -544,134 +513,12 @@ const Home2: FC = () => {
       </Row>
       {/* <Navbar/> */}
 
-      <Collapse defaultActiveKey={["1"]} ghost>
-        {/* {testX.map((item, index) => {
-          return (
-            <Todos
-              key={item.name}
-              data={data.filter((elem) => {
-                if (item.name == "All Tasks") {
-                  return data;
-                } else {
-                  return elem.category === item.name;
-                }
-              })}
-              setOpen={setOpen}
-              category={item.name}
-              icon={item.icon}
-              defaultKey={item.name === "All Tasks" ? true : false}
-              handleDelete={handleDelete}
-              handleEdit={handleEdit}
-              handleComplete={handleComplete}
-              show={item.name === "All Tasks" && true}
-            />
-          );
-        })} */}
-
-        {data.map((item, index) => {
-          return (
-            <Panel header={item.categoryN} key={index + 1}>
-              <Row gutter={[12, 12]} className="">
-                {item?.actualData?.map((dItem, index) => {
-                  return (
-                    <Col className="gutter-row" lg={6} md={8} sm={12} xs={12}>
-                      <div
-                        className="Test-Card"
-                        style={{ padding: ".5rem 1rem" }}
-                      >
-                        <Row
-                          gutter={[2, 2]}
-                          className=""
-                          style={{
-                            background: "",
-                            display: "flex",
-                            justifyContent: "start",
-                            alignItems: "start",
-                          }}
-                        >
-                          <Col className="gutter-row" lg={4}>
-                            <div style={{ marginTop: "6px" }}>{item.icon}</div>
-                          </Col>
-                          <Col className="gutter-row" lg={16}>
-                            <div
-                              style={{
-                                display: "flex",
-                                gap: "2px",
-                                flexDirection: "column",
-                              }}
-                            >
-                              <span>{dItem.title}</span>
-                              <span>{dItem.description}</span>
-                            </div>
-                          </Col>
-                        </Row>
-
-                        <Row gutter={[12, 12]} className="">
-                          <Col className="gutter-row" offset={18} lg={6}>
-                            <div style={{ display: "flex", gap: "10px" }}>
-                              <EditOutlined
-                                style={{ color: "blue", fontSize: "1.2rem" }}
-                                onClick={() => {
-                                  handleEdit2(item.categoryN, dItem.id);
-                                }}
-                              />
-                              <DeleteOutlined
-                                style={{ color: "red", fontSize: "1.2rem" }}
-                                onClick={() => {
-                                  handleDelete2(item.categoryN, dItem.id);
-                                }}
-                              />
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    </Col>
-                  );
-                })}
-              </Row>
-            </Panel>
-          );
-        })}
-      </Collapse>
-
-      {/* CATEGORIES */}
-
-      {/* <Todos
-        data={data.filter((item) => item.category === "general")}
-        category="General"
-        defaultKey={true}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
-      />
-
-      <Todos
-        data={data.filter((item) => item.category === "technology")}
-        category="Technology"
-        defaultKey={false}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
-      />
-      <Todos
-        data={data.filter((item) => item.category === "health")}
-        category="Health & Hobbies"
-        defaultKey={false}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
-      />
-      <Todos
-        data={data.filter((item) => item.category === 'others')}
-        category="Others"
-        defaultKey={false}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
-      />
-      <Todos
+      <Todo
         data={data}
-        category="All"
-        defaultKey={false}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
-      /> */}
+        showModal={showModal}
+        handleEdit2={handleEdit2}
+        handleDelete2={handleDelete2}
+      />
     </StyledContainer>
   );
 };

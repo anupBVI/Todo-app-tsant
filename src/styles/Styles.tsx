@@ -105,4 +105,10 @@ export const StyledContainer = styled.div`
     flex-direction: column;
     gap: 12px;
   }
+
+  .ant-collapse>.ant-collapse-item >.ant-collapse-header {
+    width:200px;
+   }
+
+ 
 `;

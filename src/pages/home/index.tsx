@@ -302,6 +302,8 @@ const Home: FC = () => {
     // )
   };
 
+  console.log(data)
+
   return (
     <StyledContainer className="">
       <Header />
