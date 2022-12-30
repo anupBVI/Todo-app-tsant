@@ -1,7 +1,9 @@
 import React, { ChangeEvent, FC, FormEvent, useRef, useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { Row, Form, Col, Input, Button, Modal, Select, Collapse } from "antd";
+import { Row, Col, Input, Button, Modal, Collapse } from "antd";
+
+import { Select, Form } from "antd";
 import {
   GlobalOutlined,
   PlusOutlined,
@@ -48,6 +50,8 @@ const Home2: FC = () => {
 
   const [data, setData] = useState<IData[]>(InitialData);
 
+  const [reference, setReference] = useState<any>({})
+
   // ::::::::::::::::::::::::::::::::::::::::::  MODAL  1  ::::::::::::::::::::::::::::::::::::::::::::::
 
   const handleOk = () => {
@@ -72,7 +76,7 @@ const Home2: FC = () => {
   // :::::::::::::::::::::::::::::::::::::::::: MODAL 1  ::::::::::::::::::::::::::::::::::::::::::::::
 
   // :::::::::::::::::::::::::::::::::::::::::: MODAL 2  ::::::::::::::::::::::::::::::::::::::::::::::
-  const handleOk2 = () => {
+  const handleOkCategory = () => {
     alert("OK clicked");
     setLoading(true);
     setTimeout(() => {
@@ -81,7 +85,7 @@ const Home2: FC = () => {
     }, 3000);
   };
 
-  const handleCancel2 = () => {
+  const handleCancelCategory = () => {
     setOpen2(false);
     form2.resetFields();
     setUpdateBtn(false);
@@ -91,68 +95,34 @@ const Home2: FC = () => {
     setOpen2(true);
   };
 
-  const onFinish2 = (values: any) => {
-    if (!updateBtn) {
-      console.log("Adding Data");
-      const x = {
-        categoryN: values.category,
-        icon: <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />,
-        actualData: [
-          {
-            id: uuidv4(),
-            title: values.title,
-            description: values.description,
-            url: values.url,
-            isCompleted: false,
-          },
-        ],
-      };
-      setData([...data, x]);
-
-      setCategoryList([...categoryList, { name: x.categoryN, icon: x.icon }]);
-
-      notifySuccess("Category Added Successfully");
-      form2.resetFields();
-      handleCancel2();
-    }
-
-    if (updateBtn) {
-      console.log("updating Data");
-      console.log("updating data");
-
-      const newData = data.map((item) => {
-        if (item.categoryN === catToUpdate) {
-          return {
-            ...item,
-            actualData: item.actualData.map((dataItem) => {
-              if (dataItem.id === taskToUpdate) {
-                return {
-                  ...dataItem,
-                  title: values.title,
-                  description: values.description,
-                  url: values.url,
-                  isCompleted: dataItem.isCompleted,
-                };
-              }
-              return dataItem;
-            }),
-          };
-        }
-        return item;
-      });
-
-      setData(newData);
-
-      notifySuccess("Task Updated Successfully");
-      handleCancel2();
-    }
+  const onFinishCategory = (values: any) => {
+    console.log("on finish category");
+    console.log("Adding Data");
+    const x = {
+      categoryN: values.category,
+      icon: <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />,
+      actualData: [
+        // {
+        //   id: uuidv4(),
+        //   title: values.title,
+        //   description: values.description,
+        //   url: values.url,
+        //   isCompleted: false,
+        // },
+      ],
+    };
+    setData([...data, x]);
+    setCategoryList([...categoryList, { name: x.categoryN, icon: x.icon }]);
+    notifySuccess("Category Added Successfully");
+    form2.resetFields();
+    handleCancelCategory();
   };
 
-  const onFinishFailed2 = (errorInfo: any) => {
+  const onFinishCategoryFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
   // :::::::::::::::::::::::::::::::::::::::::: MODAL 2  ::::::::::::::::::::::::::::::::::::::::::::::
-
+                                                
   // :::::::::::::::::::::::::::::::::::::::::: TOAST MESSAGE   ::::::::::::::::::::::::::::::::::::::::::::::
 
   const notifySuccess = (x: string) =>
@@ -170,97 +140,175 @@ const Home2: FC = () => {
   // :::::::::::::::::::::::::::::::::::::::::: TOAST MESSAGE   ::::::::::::::::::::::::::::::::::::::::::::::
 
   // :::::::::::::::::::::::::::  ADD COLLECTION FORM  ::::::::::::::::::::::::::::::::::::::::::
-  const onFinish = (values: any) => {
+  const onFinishTask = (values: any) => {
+    const { category, title, description, url } = values;
     console.log("Success:", values);
     console.log("new form submitting");
 
-    if (values.category == undefined) {
-      form.setFieldsValue({
-        category: "Others",
-        title: values.title,
-        description: values.description,
-        url: values.url,
+    if (!updateBtn) {
+      setData((prevState) => {
+        // Create a new object that will replace the previous state
+        const newState = [...prevState];
+        // Find the index of the category in the newState array
+        const categoryIndex = newState.findIndex(
+          (cat) => cat.categoryN === values.category
+        );
+
+        console.log(categoryIndex);
+
+        // Check if the category exists in the newState array
+        if (categoryIndex !== -1) {
+          // If the category exists, add the new data to the actualData array
+          newState[categoryIndex].actualData.push({
+            id: uuidv4(),
+            title: values.title,
+            description: values.description,
+            url: values.url,
+            isCompleted: false,
+          });
+        }
+        // else {
+        //   // const nbv =
+        //   // If the category does not exist, add a new category with the new data
+        //   newState.push({
+        //     categoryN: "General",
+        //     icon: (
+        //       <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
+        //     ),
+        //     actualData: [
+        //       {
+        //         id: uuidv4(),
+        //         title: values.title,
+        //         description: values.description,
+        //         url: values.url,
+        //         isCompleted: false,
+        //       },
+        //     ],
+        //   });
+        //   setCategoryList([
+        //     ...categoryList,
+        //     {
+        //       name: "Others",
+        //       icon: (
+        //         <GlobalOutlined
+        //           style={{ fontSize: "1.3rem", color: "green" }}
+        //         />
+        //       ),
+        //     },
+        //   ]);
+        // }
+
+        // Return the new state object
+        return newState;
       });
+
+      form.resetFields();
+      notifySuccess("Task Added SuccessFully");
+
+      setTimeout(() => {
+        handleCancel();
+      }, 100);
     }
 
-   
-    setData((prevState) => {
-      // Create a new object that will replace the previous state
-      const newState = [...prevState];
-      // Find the index of the category in the newState array
-      const categoryIndex = newState.findIndex(
-        (cat) => cat.categoryN === values.category
-      );
+    if (updateBtn) {
 
-      console.log(categoryIndex);
+      // setData((prevState) => {
+      //   // Find the index of the category that needs to be updated
+      //   const categoryIndex = prevState.findIndex((cat) => cat.categoryN === values.category);
+    
+      //   // Find the index of the data that needs to be moved
+      //   const dataIndex = prevState[categoryIndex].actualData.findIndex((data) => data.title === reference.title);
+    
+      //   // Remove the data from the current category
+      //   const updatedCategory = {
+      //     ...prevState[categoryIndex],
+      //     actualData: [
+      //       ...prevState[categoryIndex].actualData.slice(0, dataIndex),
+      //       ...prevState[categoryIndex].actualData.slice(dataIndex + 1),
+      //     ],
+      //   };
+    
+      //   // Add the data to the new category
+      //   const newCategoryIndex = prevState.findIndex((cat) => cat.categoryN === reference.category);
+      //   const updatedNewCategory = {
+      //     ...prevState[newCategoryIndex],
+      //     actualData: [
+      //       ...prevState[newCategoryIndex].actualData,
+      //       {
+      //         id: uuidv4(),
+      //         title: reference.title,
+      //         description: reference.description,
+      //         url: reference.url,
+      //         isCompleted: false,
+      //       },
+      //     ],
+      //   };
+    
+      //   // Update the state with the new categories
+      //   return [
+      //     ...prevState.slice(0, categoryIndex),
+      //     updatedCategory,
+      //     ...prevState.slice(categoryIndex + 1),
+      //     ...prevState.slice(newCategoryIndex, newCategoryIndex + 1),
+      //     updatedNewCategory,
+      //     ...prevState.slice(newCategoryIndex + 1),
+      //   ];
+      // });
+    
 
-      // Check if the category exists in the newState array
-      if (categoryIndex !== -1) {
-        // If the category exists, add the new data to the actualData array
-        newState[categoryIndex].actualData.push({
-          id: uuidv4(),
-          title: values.title,
-          description: values.description,
-          url: values.url,
-          isCompleted: false,
-        });
-      } else {
-        // const nbv =
-        // If the category does not exist, add a new category with the new data
-        newState.push({
-          categoryN: values.category,
-          icon: (
-            <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
-          ),
-          actualData: [
-            {
-              id: uuidv4(),
-              title: values.title,
-              description: values.description,
-              url: values.url,
-              isCompleted: false,
-            },
-          ],
-        });
-        setCategoryList([
-          ...categoryList,
-          {
-            name: "Others",
-            icon: (
-              <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
-            ),
-          },
-        ]);
-      }
 
-      // Return the new state object
-      return newState;
-    });
+      const newData = data.map((item) => {
+        if (item.categoryN === catToUpdate) {
+          console.log("need to change -", category);
+          return {
+            ...item,
+            actualData: item.actualData.map((dataItem) => {
+              if (dataItem.id === taskToUpdate) {
+                return {
+                  ...dataItem,
+                  title,
+                  description,
+                  url,
+                  isCompleted : false
+                };
+              }
 
-    form.resetFields();
-    notifySuccess("Task Added SuccessFully");
+              return dataItem;
+            }),
+          };
+        }
+        return item;
+      });
 
-    setTimeout(() => {
+      setData(newData);
+
+      notifySuccess("Task Updated Successfully");
       handleCancel();
-    }, 100);
+    }
   };
   // :::::::::::::::::::::::::::  ADD COLLECTION FORM  ::::::::::::::::::::::::::::::::::::::::::
 
-  console.log(data);
-
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishTaskFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
 
-  const handleEdit2 = (c: string, id: string) => {
+  const handleEdit = (c: string, id: string) => {
     setUpdateBtn(true);
     setCatToUpdate(c);
     setTaskToUpdate(id);
     const xx = data.find((x) => x.categoryN === c);
     const yy = xx?.actualData.find((x) => x.id === id);
-    showModal2();
+    showModal();
 
-    form2.setFieldsValue({
+    setReference({
+      id: yy?.id,
+      title: yy?.title,
+      description: yy?.description,
+      url: yy?.url,
+      category: c,
+    })
+
+    form.setFieldsValue({
       id: yy?.id,
       title: yy?.title,
       description: yy?.description,
@@ -270,7 +318,7 @@ const Home2: FC = () => {
     console.log(id);
   };
 
-  const handleDelete2 = (c: string, id: string) => {
+  const handleDelete = (c: string, id: string) => {
     console.log("Delete button clicked");
     console.log(c);
     console.log(id);
@@ -296,14 +344,14 @@ const Home2: FC = () => {
     })
   );
 
-  console.log(categoryList);
+  // console.log(categoryList);
+  console.log(data);
 
   return (
     <StyledContainer className="">
       <Header />
       <ToastContainer />
       <Row gutter={[3, 12]} className="row-wrapper-nav">
-
         {/* {
           NavData.map((item , index))
         } */}
@@ -322,7 +370,7 @@ const Home2: FC = () => {
         <Col className="gutter-row" lg={3} md={3} sm={2} xs={2}>
           <div className="content">COLLAPSE</div>
         </Col>
-
+        {/* :::::::::::::::::::::     CATEGORY    :::::::::::::::::::: */}
         <Col className="gutter-row" lg={4} md={3} sm={2} xs={2}>
           <div className="content">
             <Button onClick={showModal2} icon={<PlusOutlined />}>
@@ -332,8 +380,8 @@ const Home2: FC = () => {
 
             <Modal
               open={open2}
-              onOk={handleOk2}
-              onCancel={handleCancel2}
+              onOk={handleOkCategory}
+              onCancel={handleCancelCategory}
               footer={false}
             >
               <Row gutter={[24, 12]} className="row-wrapper">
@@ -344,26 +392,24 @@ const Home2: FC = () => {
                       labelCol={{ span: 24 }}
                       wrapperCol={{ span: 24 }}
                       layout="horizontal"
-                      onFinish={onFinish2}
-                      onFinishFailed={onFinishFailed2}
+                      onFinish={onFinishCategory}
+                      onFinishFailed={onFinishCategoryFailed}
                       initialValues={{ remember: true }}
                     >
-                      {!updateBtn && (
-                        <Form.Item
-                          name="category"
-                          label="Enter Category"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Please Enter any category name",
-                            },
-                          ]}
-                        >
-                          <Input />
-                        </Form.Item>
-                      )}
-
                       <Form.Item
+                        name="category"
+                        label="Enter Category"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please Enter any category name",
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+
+                      {/* <Form.Item
                         name="title"
                         label="Title"
                         // rules={[
@@ -382,7 +428,7 @@ const Home2: FC = () => {
 
                       <Form.Item name="url" label="URL">
                         <Input />
-                      </Form.Item>
+                      </Form.Item> */}
 
                       <Row gutter={12}>
                         <Col span={6}>
@@ -394,7 +440,7 @@ const Home2: FC = () => {
                         </Col>
                         <Col span={6} offset={6}>
                           <Form.Item wrapperCol={{ span: 24 }}>
-                            <Button block onClick={handleCancel2}>
+                            <Button block onClick={handleCancelCategory}>
                               Cancel
                             </Button>
                           </Form.Item>
@@ -414,6 +460,9 @@ const Home2: FC = () => {
             </Modal>
           </div>
         </Col>
+        {/* :::::::::::::::::::::     CATEGORY    :::::::::::::::::::: */}
+
+        {/* :::::::::::::::::::::     TASK    :::::::::::::::::::: */}
 
         <Col className="gutter-row" lg={4} md={3} sm={2} xs={2}>
           <div className="content">
@@ -436,8 +485,8 @@ const Home2: FC = () => {
                       labelCol={{ span: 24 }}
                       wrapperCol={{ span: 24 }}
                       layout="horizontal"
-                      onFinish={onFinish}
-                      onFinishFailed={onFinishFailed}
+                      onFinish={onFinishTask}
+                      onFinishFailed={onFinishTaskFailed}
                       initialValues={{ remember: true }}
                     >
                       <Form.Item
@@ -455,15 +504,22 @@ const Home2: FC = () => {
 
                       <Form.Item
                         name="category"
+                        initialValue={"General"}
                         label="Category"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please Select any category!",
-                          },
-                        ]}
                       >
-                        <Select placeholder="Select a category" allowClear>
+                        {/* {Form.getFieldDecorator("select", {
+                          initialValue: "General",
+                        })(
+                          <Select defaultValue={"General"}>
+                            {categoryList.map((item, index) => (
+                              <Option key={index} value={item.name}>
+                                {item.name}
+                              </Option>
+                            ))}
+                          </Select>
+                        )} */}
+
+                        <Select>
                           {categoryList.map((item, index) => (
                             <Option key={index} value={item.name}>
                               {item.name}
@@ -510,14 +566,15 @@ const Home2: FC = () => {
             </Modal>
           </div>
         </Col>
+        {/* :::::::::::::::::::::     TASK    :::::::::::::::::::: */}
       </Row>
       {/* <Navbar/> */}
 
       <Todo
         data={data}
         showModal={showModal}
-        handleEdit2={handleEdit2}
-        handleDelete2={handleDelete2}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
       />
     </StyledContainer>
   );

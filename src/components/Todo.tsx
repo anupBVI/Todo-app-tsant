@@ -1,50 +1,59 @@
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
-import { Button, Col, Collapse, Row } from 'antd'
-import React from 'react'
-import { IData } from '../pages/home'
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Col, Collapse, Row } from "antd";
+import React from "react";
+import { IData } from "../pages/home";
 
 interface TodosProps {
-    data: {
-        categoryN: string;
-        icon: React.ReactNode;
-        actualData: {
-          id: string;
-          title: string;
-          description: string;
-          url: string;
-          isCompleted: boolean;
-        }[];
+  data: {
+    categoryN: string;
+    icon: React.ReactNode;
+    actualData: {
+      id: string;
+      title: string;
+      description: string;
+      url: string;
+      isCompleted: boolean;
     }[];
-    showModal : () => void
-    handleDelete2: (c: string, id: string) => void;
-    handleEdit2: (c: string, id: string) => void;
-    // handleComplete: (id: string) => void;
-    // show: boolean;
-    // setOpen:any
-  }
+  }[];
+  showModal: () => void;
+  handleDelete: (c: string, id: string) => void;
+  handleEdit: (c: string, id: string) => void;
+  // handleComplete: (id: string) => void;
+  // show: boolean;
+  // setOpen:any
+}
 
-const Todo = (props : TodosProps) => {
-    const {data , handleDelete2 , handleEdit2 , showModal} = props
+const Todo = (props: TodosProps) => {
+  const { data, handleDelete, handleEdit, showModal } = props;
 
-    const { Panel} = Collapse
+  const { Panel } = Collapse;
   return (
     <>
-            
-    {props.data.map((item, index) => {
+      {props.data.map((item, index) => {
         const Head = (
-          <div style={{width:"200px"}}>
-            <span style={{fontWeight:"500" , fontSize:"1.1rem" , color:"#3e3e3e"}}>
-             
+          <div style={{ width: "200px" }}>
+            <span
+              style={{
+                fontWeight: "500",
+                fontSize: "1.1rem",
+                color: "#3e3e3e",
+              }}
+            >
               {item.categoryN} <small>({item.actualData?.length})</small>{" "}
             </span>
           </div>
         );
         return (
-          <Collapse defaultActiveKey={["1"]} ghost expandIconPosition={"end"} className="testi" >
-            <Panel header={Head} key={index + 1} >
+          <Collapse
+            defaultActiveKey={["1"]}
+            ghost
+            expandIconPosition={"end"}
+            className="testi"
+          >
+            <Panel header={Head} key={index + 1}>
               <Row gutter={[12, 12]} className="">
                 {item?.actualData.length === 0 && (
-                  <div style={{marginLeft:"1.5rem"}}>
+                  <div style={{ marginLeft: "1.5rem" }}>
                     <p>No Tasks Available</p>
                     <br />
                     <Button onClick={showModal} icon={<PlusOutlined />}>
@@ -53,7 +62,7 @@ const Todo = (props : TodosProps) => {
                     </Button>
                   </div>
                 )}
-                {item?.actualData?.map((dItem:any) => {
+                {item?.actualData?.map((dItem: any) => {
                   return (
                     <Col className="gutter-row" lg={6} md={8} sm={12} xs={12}>
                       <div
@@ -93,13 +102,13 @@ const Todo = (props : TodosProps) => {
                               <EditOutlined
                                 style={{ color: "blue", fontSize: "1.2rem" }}
                                 onClick={() => {
-                                  handleEdit2(item.categoryN, dItem.id);
+                                  handleEdit(item.categoryN, dItem.id);
                                 }}
                               />
                               <DeleteOutlined
                                 style={{ color: "red", fontSize: "1.2rem" }}
                                 onClick={() => {
-                                  handleDelete2(item.categoryN, dItem.id);
+                                  handleDelete(item.categoryN, dItem.id);
                                 }}
                               />
                             </div>
@@ -115,7 +124,7 @@ const Todo = (props : TodosProps) => {
         );
       })}
     </>
-  )
-}
+  );
+};
 
-export default Todo
+export default Todo;

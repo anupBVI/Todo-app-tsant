@@ -80,11 +80,123 @@ const actualData = [
 const cData = actualData.filter((item)=>{
   return item.category === "General"
 })
+// const t = [
+//   {
+//     categoryN: "General",
+//     icon: "general icon",
+//     actualData: [
+//       {
+//         id: uuidv4(),
+//         title: "Default 01",
+//         description: "Default Description",
+//         url: "Default Url",
+//         isCompleted: false,
+//       },
+//     ],
+//   },
+//   {
+//     categoryN: "Random",
+//     icon: "general icon",
+//     actualData: [
+//       {
+//         id: uuidv4(),
+//         title: "Default 01",
+//         description: "Default Description",
+//         url: "Default Url",
+//         isCompleted: false,
+//       },
+//     ],
+//   },
+
+// ]
+
+// on click on a button a form with fields title category description and url is popullated. i want to set the data in such a way , whatever the category is choosen from this form. i want to add those data in that particular category only
 
 
+// on a click of edit data button a auto populated form is opening in which i am getting these values
+//  {
+//    category : " General",
+//    title : "Default 01",
+//    description: "Default Description"
+//    url : "Default Url"
+//   }
+
+//  i have a state 
+
+//  const [state , setState] = useState([
+//   {
+//     categoryN: "General",
+//     icon: "general icon",
+//     actualData: [
+//       {
+//         id: uuidv4(),
+//         title: "Default 01",
+//         description: "Default Description",
+//         url: "Default Url",
+//         isCompleted: false,
+//       },
+//     ],
+//   },
+//   {
+//     categoryN: "Random",
+//     icon: "general icon",
+//     actualData: [
+//       {
+//         id: uuidv4(),
+//         title: "Default 02",
+//         description: "Default Description 02",
+//         url: "Default Url 02",
+//         isCompleted: false,
+//       },
+//     ],
+//   },
+// ])
+
+// in a form if i changed the category to Random , the output state should look like 
 
 
+//  const [state , setState] = useState([
+//   {
+//     categoryN: "General",
+//     icon: "general icon",
+//     actualData: [
+      
+//     ],
+//   },
+//   {
+//     categoryN: "Random",
+//     icon: "general icon",
+//     actualData: [
+//       {
+//         id: uuidv4(),
+//         title: "Default 02",
+//         description: "Default Description 02",
+//         url: "Default Url 02",
+//         isCompleted: false,
+//       },
+//        {
+//           id: uuidv4(),
+//           title: "Default 01",
+//           description: "Default Description",
+//           url: "Default Url",
+//           isCompleted: false,
+//         },
+//     ],
+//   },
+// ])
 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// }
 
 
 
