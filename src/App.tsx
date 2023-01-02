@@ -12,6 +12,9 @@ import New from "./pages/new";
 import Navbar from "./components/Navbar/Navbar";
 import Page3 from "./pages/page3";
 import Page4 from "./pages/page4";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,6 +23,9 @@ const Wrapper = styled.div`
 
 const App = () => {
   return (
+    <Provider store={store}>
+
+
     <ThemeProvider theme={Theme}>
       <GlobalStyles />
 
@@ -38,6 +44,8 @@ const App = () => {
         </Wrapper>
       </Router>
     </ThemeProvider>
+    </Provider>
+
   );
 };
 

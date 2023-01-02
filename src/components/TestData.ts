@@ -240,3 +240,67 @@ const cData = actualData.filter((item)=>{
 //   },
 // ]);
 
+
+// / const [data, setData] = useState([
+  //   {
+  //     categoryN: "General",
+  //     icon: "general icon",
+  //     actualData: [
+  //       {
+  //         id: uuidv4(),
+  //         title: "General 01",
+  //         description: "Default Description",
+  //         url: "Default Url",
+  //         isCompleted: false,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     categoryN: "Random",
+  //     icon: "general icon",
+  //     actualData: [
+  //       {
+  //         id: uuidv4(),
+  //         title: "Random 01",
+  //         description: "Default Description",
+  //         url: "Default Url",
+  //         isCompleted: false,
+  //       },
+  //     ],
+  //   },
+  // ]);
+  
+  // // Assume the above state assume each object in the array as a data of individual task.
+  // // There is a category key in each objects so are the actual data array in each object.
+  // // on click of the edit button a form is pop up with the pre popullated data, if clicked of a card belong to the respective categoty .
+  // // suppose the edit button is clicked on general category card. and in the form if i change the category from general to random.
+  // // i want my state to look like below
+  
+  // const [data, setData] = useState([
+  //   {
+  //     categoryN: "General",
+  //     icon: "general icon",
+  //     actualData: [
+  //       {
+  //         id: uuidv4(),
+  //         title: "General 01",
+  //         description: "Default Description",
+  //         url: "Default Url",
+  //         isCompleted: false,
+  //       },
+  //       {
+  //         id: uuidv4(),
+  //         title: "Random 01",
+  //         description: "Default Description",
+  //         url: "Default Url",
+  //         isCompleted: false,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     categoryN: "Random",
+  //     icon: "general icon",
+  //     actualData: [],
+  //   },
+  // ]);
+  

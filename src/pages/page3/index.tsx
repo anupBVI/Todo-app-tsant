@@ -1,24 +1,61 @@
-import React from "react";
+import React , {useEffect} from "react";
 import { StyledContainer } from "../../styles/Styles";
+import { useSelector, useDispatch } from "react-redux";
+import { buyCake } from "./../../redux/Cake/CakeActions";
+import { buyIceCream } from './../../redux/IceCream/CakeActions';
 
 const Page3 = () => {
-  return (
-    <StyledContainer className="">
+  const dispatch = useDispatch();
 
-      cumque illum animi maxime dolorem. Enim nobis molestias suscipit
-      cupiditate soluta voluptas laboriosam debitis sed unde atque quod rerum
-      architecto iusto illum distinctio, quam illo ut veniam, provident magni
-      accusantium labore! Cumque autem ex officia, velit iste odit, minus sunt
-      eius quibusdam voluptatem quam veniam officiis suscipit delectus aperiam
-      voluptate itaque. Unde enim obcaecati in maiores suscipit odit voluptatem
-      asperiores incidunt deserunt? A quidem nobis sit dignissimos enim corporis
-      soluta nisi unde asperiores vel, quod dicta nihil explicabo cupiditate
-      nulla rerum esse laborum! Voluptate quibusdam voluptatem repellendus est
-      saepe dolorem, eos praesentium ipsam voluptas minus? Expedita
-      reprehenderit laboriosam repudiandae, rerum perspiciatis eius voluptates
-      nobis cum corporis accusamus libero vero mollitia omnis voluptate nisi
-      cupiditate explicabo corrupti eligendi dolore facilis! Harum doloremque
-      nesciunt corporis laboriosam vel esse, fugiat totam.
+
+  const Cakes = useSelector((state: any) => state.cake.numOfCakes);
+  const Icecreams = useSelector((state: any) => state.iceCream.numOfIceCreams);
+  
+  useEffect(() => {
+  }, [])
+  
+  return (
+    <StyledContainer className="" style={{ background: "" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h2>Cakes</h2>
+        <div>
+          <h4>Number of cakes - {Cakes}</h4>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "12px",
+            }}
+          >
+            <button onClick={() => dispatch(buyCake(1))}> Buy Cake</button>
+          </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <h2>Icecreams</h2>
+
+        <div>
+          <h4>Number of cakes - {Icecreams}</h4>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "12px",
+            }}
+          >
+            <button onClick={() => dispatch(buyIceCream(3))}> Buy Cake</button>
+          </div>
+        </div>
+      </div>
     </StyledContainer>
   );
 };

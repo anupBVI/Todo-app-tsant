@@ -17,9 +17,17 @@ import "react-toastify/dist/ReactToastify.css";
 import Todo from "../../components/Todo";
 import { IData } from "../../Interfaces/Interface";
 import { NavData } from "../../Data/Data";
+import { useSelector } from "react-redux";
 
-const Home2: FC = () => {
+const Home2: FC = (props) => {
   const { Option } = Select;
+
+
+  const state = useSelector((state:any)=>state.todos);
+
+  // console.log("state comming from redux store -- " , state)
+
+
 
   const InitialData = [
     {
@@ -50,7 +58,7 @@ const Home2: FC = () => {
 
   const [data, setData] = useState<IData[]>(InitialData);
 
-  const [reference, setReference] = useState<any>({})
+  const [reference, setReference] = useState<any>({});
 
   // ::::::::::::::::::::::::::::::::::::::::::  MODAL  1  ::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -122,7 +130,7 @@ const Home2: FC = () => {
     console.log("Failed:", errorInfo);
   };
   // :::::::::::::::::::::::::::::::::::::::::: MODAL 2  ::::::::::::::::::::::::::::::::::::::::::::::
-                                                
+
   // :::::::::::::::::::::::::::::::::::::::::: TOAST MESSAGE   ::::::::::::::::::::::::::::::::::::::::::::::
 
   const notifySuccess = (x: string) =>
@@ -211,52 +219,6 @@ const Home2: FC = () => {
     }
 
     if (updateBtn) {
-
-      // setData((prevState) => {
-      //   // Find the index of the category that needs to be updated
-      //   const categoryIndex = prevState.findIndex((cat) => cat.categoryN === values.category);
-    
-      //   // Find the index of the data that needs to be moved
-      //   const dataIndex = prevState[categoryIndex].actualData.findIndex((data) => data.title === reference.title);
-    
-      //   // Remove the data from the current category
-      //   const updatedCategory = {
-      //     ...prevState[categoryIndex],
-      //     actualData: [
-      //       ...prevState[categoryIndex].actualData.slice(0, dataIndex),
-      //       ...prevState[categoryIndex].actualData.slice(dataIndex + 1),
-      //     ],
-      //   };
-    
-      //   // Add the data to the new category
-      //   const newCategoryIndex = prevState.findIndex((cat) => cat.categoryN === reference.category);
-      //   const updatedNewCategory = {
-      //     ...prevState[newCategoryIndex],
-      //     actualData: [
-      //       ...prevState[newCategoryIndex].actualData,
-      //       {
-      //         id: uuidv4(),
-      //         title: reference.title,
-      //         description: reference.description,
-      //         url: reference.url,
-      //         isCompleted: false,
-      //       },
-      //     ],
-      //   };
-    
-      //   // Update the state with the new categories
-      //   return [
-      //     ...prevState.slice(0, categoryIndex),
-      //     updatedCategory,
-      //     ...prevState.slice(categoryIndex + 1),
-      //     ...prevState.slice(newCategoryIndex, newCategoryIndex + 1),
-      //     updatedNewCategory,
-      //     ...prevState.slice(newCategoryIndex + 1),
-      //   ];
-      // });
-    
-
-
       const newData = data.map((item) => {
         if (item.categoryN === catToUpdate) {
           console.log("need to change -", category);
@@ -269,7 +231,7 @@ const Home2: FC = () => {
                   title,
                   description,
                   url,
-                  isCompleted : false
+                  isCompleted: false,
                 };
               }
 
@@ -277,10 +239,41 @@ const Home2: FC = () => {
             }),
           };
         }
+
         return item;
       });
 
       setData(newData);
+
+      // const editedTask = {
+      //   id: uuidv4(),
+      //   title: values.title,
+      //   description: values.description,
+      //   url: values.url,
+      //   isCompleted: true,
+      //   category: values.category,
+      //   originalCategory: catToUpdate,
+      // };
+
+      // setData(
+      //   data.map((item) => {
+      //     if (item.categoryN === editedTask.category) {
+      //       return {
+      //         ...item,
+      //         actualData: [...item.actualData, editedTask],
+      //       };
+      //     }
+      //      else if (item.categoryN === editedTask.originalCategory) {
+      //       return {
+      //         ...item,
+      //         actualData: item.actualData.filter(
+      //           (task) => task.id !== editedTask.id
+      //         ),
+      //       };
+      //     }
+      //     return item;
+      //   })
+      // );
 
       notifySuccess("Task Updated Successfully");
       handleCancel();
@@ -306,7 +299,7 @@ const Home2: FC = () => {
       description: yy?.description,
       url: yy?.url,
       category: c,
-    })
+    });
 
     form.setFieldsValue({
       id: yy?.id,
@@ -350,6 +343,7 @@ const Home2: FC = () => {
   return (
     <StyledContainer className="">
       <Header />
+
       <ToastContainer />
       <Row gutter={[3, 12]} className="row-wrapper-nav">
         {/* {
@@ -579,5 +573,7 @@ const Home2: FC = () => {
     </StyledContainer>
   );
 };
+
+
 
 export default Home2;
