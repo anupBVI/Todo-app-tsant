@@ -18,16 +18,17 @@ import Todo from "../../components/Todo";
 import { IData } from "../../Interfaces/Interface";
 import { NavData } from "../../Data/Data";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addCategory, addTodo } from "../../redux/Todos/TodoActions";
 
 const Home2: FC = (props) => {
   const { Option } = Select;
 
+  const state = useSelector((state: any) => state.todos);
 
-  const state = useSelector((state:any)=>state.todos);
+  const dispatch = useDispatch();
 
   // console.log("state comming from redux store -- " , state)
-
-
 
   const InitialData = [
     {
@@ -124,6 +125,8 @@ const Home2: FC = (props) => {
     notifySuccess("Category Added Successfully");
     form2.resetFields();
     handleCancelCategory();
+
+    dispatch(addCategory(x));
   };
 
   const onFinishCategoryFailed = (errorInfo: any) => {
@@ -152,72 +155,21 @@ const Home2: FC = (props) => {
     const { category, title, description, url } = values;
     console.log("Success:", values);
     console.log("new form submitting");
-
     if (!updateBtn) {
-      setData((prevState) => {
-        // Create a new object that will replace the previous state
-        const newState = [...prevState];
-        // Find the index of the category in the newState array
-        const categoryIndex = newState.findIndex(
-          (cat) => cat.categoryN === values.category
-        );
+      const todo = {
+        category,
+        icon: "icon",
+        id: uuidv4(),
+        title,
+        description,
+        url,
+        isCompleted: false,
+      };
 
-        console.log(categoryIndex);
-
-        // Check if the category exists in the newState array
-        if (categoryIndex !== -1) {
-          // If the category exists, add the new data to the actualData array
-          newState[categoryIndex].actualData.push({
-            id: uuidv4(),
-            title: values.title,
-            description: values.description,
-            url: values.url,
-            isCompleted: false,
-          });
-        }
-        // else {
-        //   // const nbv =
-        //   // If the category does not exist, add a new category with the new data
-        //   newState.push({
-        //     categoryN: "General",
-        //     icon: (
-        //       <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
-        //     ),
-        //     actualData: [
-        //       {
-        //         id: uuidv4(),
-        //         title: values.title,
-        //         description: values.description,
-        //         url: values.url,
-        //         isCompleted: false,
-        //       },
-        //     ],
-        //   });
-        //   setCategoryList([
-        //     ...categoryList,
-        //     {
-        //       name: "Others",
-        //       icon: (
-        //         <GlobalOutlined
-        //           style={{ fontSize: "1.3rem", color: "green" }}
-        //         />
-        //       ),
-        //     },
-        //   ]);
-        // }
-
-        // Return the new state object
-        return newState;
-      });
-
-      form.resetFields();
-      notifySuccess("Task Added SuccessFully");
-
-      setTimeout(() => {
-        handleCancel();
-      }, 100);
+      dispatch(addTodo(todo));
     }
 
+   
     if (updateBtn) {
       const newData = data.map((item) => {
         if (item.categoryN === catToUpdate) {
@@ -573,7 +525,5 @@ const Home2: FC = (props) => {
     </StyledContainer>
   );
 };
-
-
 
 export default Home2;
