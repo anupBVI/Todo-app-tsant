@@ -35,7 +35,7 @@ const initialState = [
     ],
   },
   {
-    categoryN: "Service",
+    categoryN: "Health",
     icon: <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />,
     actualData: [
       {
@@ -53,7 +53,6 @@ const TodoReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case ADD_CATEGORY: {
       console.log(action.payload);
-
       return [...state, action.payload];
     }
 

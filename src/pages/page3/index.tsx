@@ -16,46 +16,7 @@ const Page3 = () => {
   
   return (
     <StyledContainer className="" style={{ background: "" }}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <h2>Cakes</h2>
-        <div>
-          <h4>Number of cakes - {Cakes}</h4>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "12px",
-            }}
-          >
-            <button onClick={() => dispatch(buyCake(1))}> Buy Cake</button>
-          </div>
-        </div>
-
-        <br />
-        <br />
-        <br />
-        <h2>Icecreams</h2>
-
-        <div>
-          <h4>Number of cakes - {Icecreams}</h4>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "12px",
-            }}
-          >
-            <button onClick={() => dispatch(buyIceCream(3))}> Buy Cake</button>
-          </div>
-        </div>
-      </div>
+     
     </StyledContainer>
   );
 };

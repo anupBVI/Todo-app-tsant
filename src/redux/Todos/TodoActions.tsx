@@ -1,6 +1,9 @@
 import react from "react";
 import { ADD_CATEGORY, ADD_TODO, DELETE_TODO, EDIT_TODO } from "./TodoActionTypes";
 
+
+
+// ::::::::::::  ADD CATEGORY ACTION  ::::::::::::::::::::
 interface CatData {
   categoryN: string;
   icon: React.ReactNode;
@@ -14,7 +17,13 @@ export const addCategory = (payload: CatData) => {
     payload,
   };
 };
+// ::::::::::::  ADD CATEGORY ACTION  ::::::::::::::::::::
 
+
+
+
+
+// ::::::::::::  ADD TODO ACTION  ::::::::::::::::::::
 interface AData {
   category: string;
   icon: string;
@@ -32,7 +41,11 @@ export const addTodo = (payload: AData) => {
     payload,
   };
 };
+// ::::::::::::  ADD TODO ACTION  ::::::::::::::::::::
 
+
+
+// :::::::::::: DELETE TODO ACTION  ::::::::::::::::::::
 interface DData {
   id: string;
   category: string;
@@ -44,8 +57,10 @@ export const deleteTodo = (payload: DData) => {
     payload: payload,
   };
 };
+// :::::::::::: DELETE TODO ACTION  ::::::::::::::::::::
 
 
+// :::::::::::: EDIT TODO ACTION  ::::::::::::::::::::
 
 export const editTodo = (payload: any) => {
     console.log("Edit todo")
@@ -55,6 +70,7 @@ export const editTodo = (payload: any) => {
     payload:payload,
   };
 };
+// :::::::::::: EDIT TODO ACTION  ::::::::::::::::::::
 
 
 

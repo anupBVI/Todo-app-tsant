@@ -4,7 +4,9 @@ import {
   BankOutlined,
   BuildOutlined,
   HeatMapOutlined,
+  HomeOutlined,
   SettingOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Col, Row } from "antd";
 import React from "react";
@@ -56,7 +58,11 @@ const Navbar = () => {
       <Row gutter={12} className="Logo">
         <Col className="gutter-row" span={24}>
           <div className="content">
-            <HeatMapOutlined style={{ fontSize: "2rem" }} />
+            <NavLink
+              to="/"
+            >
+              <UserOutlined style={{ fontSize: "2rem", color: "#0f5070" }} />
+            </NavLink>
           </div>
         </Col>
       </Row>
@@ -68,11 +74,22 @@ const Navbar = () => {
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
               to="/"
             >
+              <HomeOutlined style={{ fontSize: "2rem" }} />
+            </NavLink>
+          </div>
+        </Col>
+
+        <Col className="gutter-row" span={24}>
+          <div className="content">
+            <NavLink
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/todohome"
+            >
               <AppstoreOutlined style={{ fontSize: "2rem" }} />
             </NavLink>
           </div>
         </Col>
-        <Col className="gutter-row" span={24}>
+        {/* <Col className="gutter-row" span={24}>
           <div className="content">
             <NavLink
               to="/new"
@@ -82,13 +99,12 @@ const Navbar = () => {
               <AimOutlined style={{ fontSize: "2rem" }} />
             </NavLink>
           </div>
-        </Col>
+        </Col> */}
         <Col className="gutter-row" span={24}>
           <div className="content">
             <NavLink
               to="/new3"
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
-
             >
               <BankOutlined style={{ fontSize: "2rem" }} />
             </NavLink>
@@ -99,7 +115,6 @@ const Navbar = () => {
             <NavLink
               to="/new4"
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
-
             >
               <BuildOutlined style={{ fontSize: "2rem" }} />
             </NavLink>

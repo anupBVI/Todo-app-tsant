@@ -14,6 +14,7 @@ import Page3 from "./pages/page3";
 import Page4 from "./pages/page4";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import HomePage from "./pages/homepage/HomePage";
 
 
 const Wrapper = styled.div`
@@ -34,7 +35,9 @@ const App = () => {
           <Navbar />
           <div className="right">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<HomePage />} />
+
+              <Route path="/todohome" element={<Home />} />
               <Route path="/new" element={<New />} />
               <Route path="/new3" element={<Page3 />} />
               <Route path="/new4" element={<Page4 />} />

@@ -259,7 +259,7 @@ const Todo = (props: TodosProps) => {
             </div>
           </Col>
         </Row>
-      </Modal>
+      </Modal>  
 
       {/* MODAL FOR CATEGORY  */}
 
@@ -429,65 +429,12 @@ const Todo = (props: TodosProps) => {
         );
       })}
 
-      {/* {state.map((items: any) => {
-        return (
-          <Row gutter={[12, 12]} className="row-wrapper">
-            {items.length == 0 && (
-              <>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "14px",
-                  }}
-                >
-                  <h5>No Tasks Available </h5>
-
-                  <Button icon={<PlusOutlined />}> ADD COLLECTION</Button>
-                </div>
-              </>
-            )}
-            {items.actualData?.map((iitem: any, index: any) => {
-              return (
-                <Col
-                  key={iitem.id}
-                  className="gutter-row"
-                  lg={6}
-                  md={8}
-                  sm={12}
-                  xs={12}
-                >
-                  <div className="content">
-                    <div>
-                      <Icon text="{icon}" />
-                      <span style={{ fontWeight: "500" }}>
-                        {iitem?.title}
-                        <small>{iitem?.description}</small>
-                      </span>
-                    </div>
-                    <Row>
-                      <Col span={2} offset={22}>
-                        <span>
-                          <EditOutlined
-                            style={{ color: "blue", fontSize: "1.1rem" }}
-                          />
-                        </span>
-                        <span>
-                          <DeleteOutlined
-                            style={{ color: "red", fontSize: "1.1rem" }}
-                          />
-                        </span>
-                      </Col>
-                    </Row>
-                  </div>
-                </Col>
-              );
-            })}
-          </Row>
-        );
-      })} */}
+    
 
       <hr />
+
+
+      {/* WITHOUT REDUX */}
 
       <div>
         {props.data.map((item, index) => {

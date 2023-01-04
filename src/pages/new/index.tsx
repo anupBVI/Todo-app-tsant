@@ -28,7 +28,6 @@ const Home2: FC = (props) => {
 
   const dispatch = useDispatch();
 
-  // console.log("state comming from redux store -- " , state)
 
   const InitialData = [
     {
@@ -153,6 +152,8 @@ const Home2: FC = (props) => {
   // :::::::::::::::::::::::::::  ADD COLLECTION FORM  ::::::::::::::::::::::::::::::::::::::::::
   const onFinishTask = (values: any) => {
     const { category, title, description, url } = values;
+
+    alert("shadshdjs")
     console.log("Success:", values);
     console.log("new form submitting");
     if (!updateBtn) {
@@ -167,6 +168,7 @@ const Home2: FC = (props) => {
       };
 
       dispatch(addTodo(todo));
+      
     }
 
    
@@ -527,3 +529,104 @@ const Home2: FC = (props) => {
 };
 
 export default Home2;
+
+
+
+
+
+
+
+
+
+// const onFinish = (values: any) => {
+//   const { title, description, category, url } = values;
+//   console.log("Success:", values);
+//   console.log("new form submitting");
+//   const xd = data.find((x) => x.categoryN === values.category);
+//   console.log(xd);
+
+
+
+//   if (!updateBtn) {
+//     const id = {
+//       id: uuidv4(),
+//       isCompleted: false,
+//       ...values,
+//     };
+//   if (values.category == undefined) {
+//     form.setFieldsValue({
+//       category: "Others",
+//       title: values.title,
+//       description: values.description,
+//       url: values.url,
+//     });
+//   }
+
+//     setData([...data, id]);
+//     form.resetFields();
+//     notifySuccess("Task Added SuccessFully");
+
+//   setData((prevState) => {
+//     // Create a new object that will replace the previous state
+//     const newState = [...prevState];
+//     // Find the index of the category in the newState array
+//     const categoryIndex = newState.findIndex(
+//       (cat) => cat.categoryN === values.category
+//     );
+
+//     console.log(categoryIndex);
+
+//     // Check if the category exists in the newState array
+//     if (categoryIndex !== -1) {
+//       // If the category exists, add the new data to the actualData array
+//       newState[categoryIndex].actualData.push({
+//         id: uuidv4(),
+//         title: values.title,
+//         description: values.description,
+//         url: values.url,
+//         isCompleted: false,
+//       });
+//     } else {
+//       // const nbv =
+//       // If the category does not exist, add a new category with the new data
+//       newState.push({
+//         categoryN: values.category,
+//         icon: (
+//           <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
+//         ),
+//         actualData: [
+//           {
+//             id: uuidv4(),
+//             title: values.title,
+//             description: values.description,
+//             url: values.url,
+//             isCompleted: false,
+//           },
+//         ],
+//       });
+//       setCategoryList([
+//         ...categoryList,
+//         {
+//           name: "Others",
+//           icon: (
+//             <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
+//           ),
+//         },
+//       ]);
+//     }
+
+//     setTimeout(() => {
+//       handleCancel();
+//     }, 100);
+//   }
+//     // Return the new state object
+//     return newState;
+//   });
+
+//   form.resetFields();
+//   notifySuccess("Task Added SuccessFully");
+
+//   setTimeout(() => {
+//     handleCancel();
+//   }, 100);
+// };
