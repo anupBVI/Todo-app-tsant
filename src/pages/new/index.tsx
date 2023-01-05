@@ -1,44 +1,36 @@
-import React, { ChangeEvent, FC, FormEvent, useRef, useState } from "react";
-import styled from "styled-components";
-import { v4 as uuidv4 } from "uuid";
-import { Row, Col, Input, Button, Modal, Collapse } from "antd";
+import React, { ChangeEvent, FC, FormEvent, useRef, useState } from 'react';
+import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
+import { Row, Col, Input, Button, Modal, Collapse } from 'antd';
 
-import { Select, Form } from "antd";
+import { Select, Form } from 'antd';
 import {
   GlobalOutlined,
   PlusOutlined,
   EditOutlined,
   DeleteOutlined,
-} from "@ant-design/icons";
-import { StyledContainer } from "../../styles/Styles";
-import Header from "../../components/Header";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Todo from "../../components/Todo";
-import { IData } from "../../Interfaces/Interface";
-import { NavData } from "../../Data/Data";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { addCategory, addTodo } from "../../redux/Todos/TodoActions";
+} from '@ant-design/icons';
+import { StyledContainer } from '../../styles/Styles';
+import Header from '../../components/Header';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Todo from '../../components/Todo';
+import { IData } from '../../Interfaces/Interface';
+// import { IData } from '../../interfaces/interface';
 
 const Home2: FC = (props) => {
   const { Option } = Select;
 
-  const state = useSelector((state: any) => state.todos);
-
-  const dispatch = useDispatch();
-
-
   const InitialData = [
     {
-      categoryN: "General",
-      icon: <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />,
+      categoryN: 'General',
+      icon: <GlobalOutlined style={{ fontSize: '1.3rem', color: 'green' }} />,
       actualData: [
         {
           id: uuidv4(),
-          title: "Default 01",
-          description: "Default Description",
-          url: "Default Url",
+          title: 'Default 01',
+          description: 'Default Description',
+          url: 'Default Url',
           isCompleted: false,
         },
       ],
@@ -49,8 +41,8 @@ const Home2: FC = (props) => {
   const [form2] = Form.useForm();
 
   const [updateBtn, setUpdateBtn] = useState(false);
-  const [taskToUpdate, setTaskToUpdate] = useState("");
-  const [catToUpdate, setCatToUpdate] = useState("");
+  const [taskToUpdate, setTaskToUpdate] = useState('');
+  const [catToUpdate, setCatToUpdate] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -60,10 +52,26 @@ const Home2: FC = (props) => {
 
   const [reference, setReference] = useState<any>({});
 
+  // :::::::::::::::::::::::::::::::::::::::::: TOAST MESSAGE   ::::::::::::::::::::::::::::::::::::::::::::::
+
+  const notifySuccess = (x: string) =>
+    toast.success(x, {
+      position: 'top-center',
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+
+  // :::::::::::::::::::::::::::::::::::::::::: TOAST MESSAGE   ::::::::::::::::::::::::::::::::::::::::::::::
+
   // ::::::::::::::::::::::::::::::::::::::::::  MODAL  1  ::::::::::::::::::::::::::::::::::::::::::::::
 
   const handleOk = () => {
-    alert("OK clicked");
+    alert('OK clicked');
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -85,7 +93,7 @@ const Home2: FC = (props) => {
 
   // :::::::::::::::::::::::::::::::::::::::::: MODAL 2  ::::::::::::::::::::::::::::::::::::::::::::::
   const handleOkCategory = () => {
-    alert("OK clicked");
+    alert('OK clicked');
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -104,11 +112,11 @@ const Home2: FC = (props) => {
   };
 
   const onFinishCategory = (values: any) => {
-    console.log("on finish category");
-    console.log("Adding Data");
+    console.log('on finish category');
+    console.log('Adding Data');
     const x = {
       categoryN: values.category,
-      icon: <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />,
+      icon: <GlobalOutlined style={{ fontSize: '1.3rem', color: 'green' }} />,
       actualData: [
         // {
         //   id: uuidv4(),
@@ -121,61 +129,92 @@ const Home2: FC = (props) => {
     };
     setData([...data, x]);
     setCategoryList([...categoryList, { name: x.categoryN, icon: x.icon }]);
-    notifySuccess("Category Added Successfully");
+    notifySuccess('Category Added Successfully');
     form2.resetFields();
     handleCancelCategory();
-
-    dispatch(addCategory(x));
   };
 
   const onFinishCategoryFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
   // :::::::::::::::::::::::::::::::::::::::::: MODAL 2  ::::::::::::::::::::::::::::::::::::::::::::::
-
-  // :::::::::::::::::::::::::::::::::::::::::: TOAST MESSAGE   ::::::::::::::::::::::::::::::::::::::::::::::
-
-  const notifySuccess = (x: string) =>
-    toast.success(x, {
-      position: "top-center",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
-  // :::::::::::::::::::::::::::::::::::::::::: TOAST MESSAGE   ::::::::::::::::::::::::::::::::::::::::::::::
 
   // :::::::::::::::::::::::::::  ADD COLLECTION FORM  ::::::::::::::::::::::::::::::::::::::::::
   const onFinishTask = (values: any) => {
     const { category, title, description, url } = values;
+    console.log('Success:', values);
+    console.log('new form submitting');
 
-    alert("shadshdjs")
-    console.log("Success:", values);
-    console.log("new form submitting");
     if (!updateBtn) {
-      const todo = {
-        category,
-        icon: "icon",
-        id: uuidv4(),
-        title,
-        description,
-        url,
-        isCompleted: false,
-      };
+      setData((prevState) => {
+        // Create a new object that will replace the previous state
+        const newState = [...prevState];
+        // Find the index of the category in the newState array
+        const categoryIndex = newState.findIndex(
+          (cat) => cat.categoryN === values.category
+        );
 
-      dispatch(addTodo(todo));
-      
+        console.log(categoryIndex);
+
+        // Check if the category exists in the newState array
+        if (categoryIndex !== -1) {
+          // If the category exists, add the new data to the actualData array
+          newState[categoryIndex].actualData.push({
+            id: uuidv4(),
+            title: values.title,
+            description: values.description,
+            url: values.url,
+            isCompleted: false,
+          });
+        }
+        // else {
+        //   // const nbv =
+        //   // If the category does not exist, add a new category with the new data
+        //   newState.push({
+        //     categoryN: "General",
+        //     icon: (
+        //       <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
+        //     ),
+        //     actualData: [
+        //       {
+        //         id: uuidv4(),
+        //         title: values.title,
+        //         description: values.description,
+        //         url: values.url,
+        //         isCompleted: false,
+        //       },
+        //     ],
+        //   });
+        //   setCategoryList([
+        //     ...categoryList,
+        //     {
+        //       name: "Others",
+        //       icon: (
+        //         <GlobalOutlined
+        //           style={{ fontSize: "1.3rem", color: "green" }}
+        //         />
+        //       ),
+        //     },
+        //   ]);
+        // }
+
+        // Return the new state object
+        return newState;
+      });
+
+      form.resetFields();
+      notifySuccess('Task Added SuccessFully');
+
+      setTimeout(() => {
+        handleCancel();
+      }, 100);
     }
 
-   
     if (updateBtn) {
       const newData = data.map((item) => {
-        if (item.categoryN === catToUpdate) {
-          console.log("need to change -", category);
+        if (item.categoryN === values.category) {
+          console.log('In same category blovk');
+          console.log('need to change -', category);
           return {
             ...item,
             actualData: item.actualData.map((dataItem) => {
@@ -192,12 +231,68 @@ const Home2: FC = (props) => {
               return dataItem;
             }),
           };
+        } else if (item.categoryN !== values.category) {
+          console.log('else block running');
+          return {
+            ...item,
+            actualData: item.actualData.filter(
+              (task) => task.id !== taskToUpdate
+            ),
+          };
         }
 
         return item;
       });
 
       setData(newData);
+      // dsmlsfksdfkf
+
+      const taskId = taskToUpdate;
+      const newCategory = values.category;
+
+      // setData(
+      //   data.map((item) => {
+      //     if (item.categoryN === newCategory) {
+      //       return {
+      //         ...category,
+      //         actualData: [...item.actualData, { values }],
+      //       };
+      //     }
+      //     return item;
+      //   })
+      // );
+
+      // setData((prevData: any) => {
+      //   const updatedData = prevData.map((category: any) => {
+      //     if (category.categoryN === newCategory) {
+      //       return {
+      //         ...category,
+      //         actualData: [
+      //           ...category.actualData,
+      //           prevData
+      //             .find((c: any) =>
+      //               c.actualData.some((task: any) => task.id === taskId)
+      //             )
+      //             .actualData.find((task: any) => task.id === taskId),
+      //         ],
+      //       };
+      //     } else if (
+      //       category.actualData.some((task: any) => task.id === taskId)
+      //     ) {
+      //       return {
+      //         ...category,
+      //         actualData: category.actualData.filter(
+      //           (task: any) => task.id !== taskId
+      //         ),
+      //       };
+      //     } else {
+      //       return category;
+      //     }
+      //   });
+      //   return updatedData;
+      // });
+
+      // dsmlsfksdfkf
 
       // const editedTask = {
       //   id: uuidv4(),
@@ -229,14 +324,14 @@ const Home2: FC = (props) => {
       //   })
       // );
 
-      notifySuccess("Task Updated Successfully");
+      notifySuccess('Task Updated Successfully');
       handleCancel();
     }
   };
   // :::::::::::::::::::::::::::  ADD COLLECTION FORM  ::::::::::::::::::::::::::::::::::::::::::
 
   const onFinishTaskFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
 
   const handleEdit = (c: string, id: string) => {
@@ -266,7 +361,7 @@ const Home2: FC = (props) => {
   };
 
   const handleDelete = (c: string, id: string) => {
-    console.log("Delete button clicked");
+    console.log('Delete button clicked');
     console.log(c);
     console.log(id);
 
@@ -282,7 +377,7 @@ const Home2: FC = (props) => {
       })
     );
 
-    notifySuccess("Task Deleted SuccessFully");
+    notifySuccess('Task Deleted SuccessFully');
   };
 
   const [categoryList, setCategoryList] = useState(
@@ -322,7 +417,7 @@ const Home2: FC = (props) => {
         <Col className="gutter-row" lg={4} md={3} sm={2} xs={2}>
           <div className="content">
             <Button onClick={showModal2} icon={<PlusOutlined />}>
-              {" "}
+              {' '}
               ADD CATEGORY
             </Button>
 
@@ -350,7 +445,7 @@ const Home2: FC = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please Enter any category name",
+                            message: 'Please Enter any category name',
                           },
                         ]}
                       >
@@ -369,11 +464,9 @@ const Home2: FC = (props) => {
                       >
                         <Input />
                       </Form.Item>
-
                       <Form.Item name="description" label="Description">
                         <Input.TextArea />
                       </Form.Item>
-
                       <Form.Item name="url" label="URL">
                         <Input />
                       </Form.Item> */}
@@ -396,7 +489,7 @@ const Home2: FC = (props) => {
                         <Col span={6}>
                           <Form.Item wrapperCol={{ span: 24 }}>
                             <Button type="primary" block htmlType="submit">
-                              {updateBtn ? "Update" : "Save"}
+                              {updateBtn ? 'Update' : 'Save'}
                             </Button>
                           </Form.Item>
                         </Col>
@@ -415,7 +508,7 @@ const Home2: FC = (props) => {
         <Col className="gutter-row" lg={4} md={3} sm={2} xs={2}>
           <div className="content">
             <Button onClick={showModal} icon={<PlusOutlined />}>
-              {" "}
+              {' '}
               ADD TASK
             </Button>
 
@@ -443,7 +536,7 @@ const Home2: FC = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please Enter Task Title!",
+                            message: 'Please Enter Task Title!',
                           },
                         ]}
                       >
@@ -452,7 +545,7 @@ const Home2: FC = (props) => {
 
                       <Form.Item
                         name="category"
-                        initialValue={"General"}
+                        initialValue={'General'}
                         label="Category"
                       >
                         {/* {Form.getFieldDecorator("select", {
@@ -502,7 +595,7 @@ const Home2: FC = (props) => {
                         <Col span={6}>
                           <Form.Item wrapperCol={{ span: 24 }}>
                             <Button type="primary" block htmlType="submit">
-                              {updateBtn ? "Update" : "Save"}
+                              {updateBtn ? 'Update' : 'Save'}
                             </Button>
                           </Form.Item>
                         </Col>
@@ -529,104 +622,3 @@ const Home2: FC = (props) => {
 };
 
 export default Home2;
-
-
-
-
-
-
-
-
-
-// const onFinish = (values: any) => {
-//   const { title, description, category, url } = values;
-//   console.log("Success:", values);
-//   console.log("new form submitting");
-//   const xd = data.find((x) => x.categoryN === values.category);
-//   console.log(xd);
-
-
-
-//   if (!updateBtn) {
-//     const id = {
-//       id: uuidv4(),
-//       isCompleted: false,
-//       ...values,
-//     };
-//   if (values.category == undefined) {
-//     form.setFieldsValue({
-//       category: "Others",
-//       title: values.title,
-//       description: values.description,
-//       url: values.url,
-//     });
-//   }
-
-//     setData([...data, id]);
-//     form.resetFields();
-//     notifySuccess("Task Added SuccessFully");
-
-//   setData((prevState) => {
-//     // Create a new object that will replace the previous state
-//     const newState = [...prevState];
-//     // Find the index of the category in the newState array
-//     const categoryIndex = newState.findIndex(
-//       (cat) => cat.categoryN === values.category
-//     );
-
-//     console.log(categoryIndex);
-
-//     // Check if the category exists in the newState array
-//     if (categoryIndex !== -1) {
-//       // If the category exists, add the new data to the actualData array
-//       newState[categoryIndex].actualData.push({
-//         id: uuidv4(),
-//         title: values.title,
-//         description: values.description,
-//         url: values.url,
-//         isCompleted: false,
-//       });
-//     } else {
-//       // const nbv =
-//       // If the category does not exist, add a new category with the new data
-//       newState.push({
-//         categoryN: values.category,
-//         icon: (
-//           <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
-//         ),
-//         actualData: [
-//           {
-//             id: uuidv4(),
-//             title: values.title,
-//             description: values.description,
-//             url: values.url,
-//             isCompleted: false,
-//           },
-//         ],
-//       });
-//       setCategoryList([
-//         ...categoryList,
-//         {
-//           name: "Others",
-//           icon: (
-//             <GlobalOutlined style={{ fontSize: "1.3rem", color: "green" }} />
-//           ),
-//         },
-//       ]);
-//     }
-
-//     setTimeout(() => {
-//       handleCancel();
-//     }, 100);
-//   }
-//     // Return the new state object
-//     return newState;
-//   });
-
-//   form.resetFields();
-//   notifySuccess("Task Added SuccessFully");
-
-//   setTimeout(() => {
-//     handleCancel();
-//   }, 100);
-// };

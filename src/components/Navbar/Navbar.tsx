@@ -89,7 +89,7 @@ const Navbar = () => {
             </NavLink>
           </div>
         </Col>
-        {/* <Col className="gutter-row" span={24}>
+        <Col className="gutter-row" span={24}>
           <div className="content">
             <NavLink
               to="/new"
@@ -99,7 +99,7 @@ const Navbar = () => {
               <AimOutlined style={{ fontSize: "2rem" }} />
             </NavLink>
           </div>
-        </Col> */}
+        </Col>
         <Col className="gutter-row" span={24}>
           <div className="content">
             <NavLink
