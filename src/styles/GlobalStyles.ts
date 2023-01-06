@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { Theme } from "./Theme"; 
+import { Theme } from "./Theme";
 
 export const GlobalStyles = createGlobalStyle`
     *{
@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
         box-sizing:border-box
     }
     body{
-        font-family:${()=>Theme.font.primary};
-        font-weight : ${()=>Theme.font.regular};
+        font-family:${() => Theme.font.primary};
+        font-weight : ${() => Theme.font.regular};
     }
-`
+`;

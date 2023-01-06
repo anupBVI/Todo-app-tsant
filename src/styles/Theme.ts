@@ -20,5 +20,9 @@ export const Theme = {
     bg7: "#FBB452",
     bg8: "#49BABA",
     bg9: "#966298",
+
+    bgCard1: " #2ef9e8",
+    bgCard2: "#f9902e",
+    bgCard3: "#f84242",
   },
 };

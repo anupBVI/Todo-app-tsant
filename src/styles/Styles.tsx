@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 export const StyledContainer = styled.div`
-  width: 96vw;
-  height: 95vh;
-  overflow: scroll;
+  width: 100vw;
+  height:100vh;
+  /* overflow: scroll; */
   overflow-x: hidden;
   /* margin: 10px auto; */
-  padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 1rem;

@@ -45,7 +45,7 @@ const StyledNavbar = styled.div`
   }
 `;
 
-const Navbar = () => {
+const Navbar:any = () => {
   let activeStyle = {
     textDecoration: "underline",
     color: " #47ceff",
