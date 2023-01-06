@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import {} from "react-router";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
@@ -16,39 +16,35 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import HomePage from "./pages/homepage/HomePage";
 
-
 const Wrapper = styled.div`
   display: flex;
-  /* width:90vw; */
+  margin: 0;
 `;
 
 const App = () => {
+  const [Nav, setNav] = useState(false);
   return (
     <Provider store={store}>
+      <ThemeProvider theme={Theme}>
+        <GlobalStyles />
 
-
-    <ThemeProvider theme={Theme}>
-      <GlobalStyles />
-
-      <Router>
-        <Wrapper>
-          <Navbar />
-          <div className="right">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-
-              <Route path="/todohome" element={<Home />} />
-              <Route path="/new" element={<New />} />
-              <Route path="/new3" element={<Page3 />} />
-              <Route path="/new4" element={<Page4 />} />
-            </Routes>
-            <div className="footer">Hello</div>
-          </div>
-        </Wrapper>
-      </Router>
-    </ThemeProvider>
+        <Router>
+          <Wrapper>
+            {Nav && <Navbar />}
+            <div className="right">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/todohome" element={<Home />} />
+                <Route path="/new" element={<New />} />
+                <Route path="/new3" element={<Page3 />} />
+                <Route path="/new4" element={<Page4 />} />
+              </Routes>
+              <div className="footer"></div>
+            </div>
+          </Wrapper>
+        </Router>
+      </ThemeProvider>
     </Provider>
-
   );
 };
 

@@ -2,10 +2,16 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   background: #eaf6f6;
+  overflow-y: hidden;
   padding: 12px;
+  width: 100%;
+  /* height:100vh; */
+  overflow: scroll;
+  /* background: #000; */
 `;
 export const Container = styled.div`
   background: #ffffff;
+  width: 100%;
   height: 100vh;
   display: flex;
   justify-content: space-between;
@@ -50,7 +56,7 @@ export const NavItemName = styled.div`
 `;
 
 export const Content = styled.div`
-  background: #e2f6fe;
+  /* background: #e2f6fe; */
   background: #f5f9fd;
   border-radius: 6px;
   flex: 5;
@@ -95,7 +101,7 @@ export const UserDetails = styled.div`
   align-items: center;
   gap: 0.6rem;
   width: 70%;
-  padding: 2px 7px;
+  padding: 7px 7px;
 `;
 
 export const UserIcon = styled.div`
@@ -156,7 +162,7 @@ export const ContentCard = styled.div`
     background: #f84242;
   }
 
-  &.breaker{
+  &.breaker {
     background: #000;
   }
 `;
@@ -221,4 +227,3 @@ export const BreakRow = styled.div`
   padding: 1rem;
   border-radius: 12px;
 `;
-

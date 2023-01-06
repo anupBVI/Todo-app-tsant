@@ -3,3 +3,30 @@
 .ant-form-item {
   margin-bottom: 10px!important;
 }
+
+.ant-modal-root .ant-modal-wrap{
+  /* background: #f5f9fd; */
+  /* opacity: .8; */
+}
+
+.ant-modal .ant-modal-content{
+  background:#ffffff ;
+  width:100%;
+  
+}
+
+.ant-modal .ant-modal-title{
+  }
+
+  /* const timeComponents = totalBreaksTime?.split(":");
+  // Extract the minutes from the time components
+  let minutes = timeComponents?.[1];
+  let seconds = timeComponents?.[2]
+  // Add a leading zero if necessary
+  if (minutes?.length < 2) {
+    minutes = "0" + minutes;
+  }
+  if (seconds?.length < 2) {
+    seconds? = "0" + seconds?;
+  } */
+  
