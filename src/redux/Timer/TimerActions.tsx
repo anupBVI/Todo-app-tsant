@@ -11,6 +11,8 @@ import {
       payload,
     };
   };
+
+  
   export const endTimer = (payload: any) => {
     return {
       type: STOP_TIMER,

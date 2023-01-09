@@ -18,6 +18,28 @@
 .ant-modal .ant-modal-title{
   }
 
+  .ant-modal-footer{
+  }
+  .ant-modal-footer button:nth-child(1){
+    background: rgb(106, 106, 106);
+    color:white;
+    border:none;
+  }
+  .ant-modal-footer button:nth-child(1):hover{
+    background: rgb(128, 128, 128);
+    color:white;
+    border:none;
+
+  }
+  .ant-modal-footer button:nth-child(2){
+    background: rgb(241, 43, 66);
+    color:white;
+  }
+
+
+
+  /* .ant-modal-footer */
+
   /* const timeComponents = totalBreaksTime?.split(":");
   // Extract the minutes from the time components
   let minutes = timeComponents?.[1];

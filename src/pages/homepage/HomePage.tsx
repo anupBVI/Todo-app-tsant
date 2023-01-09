@@ -2,6 +2,7 @@ import {
   CoffeeOutlined,
   ContainerFilled,
   ExclamationCircleFilled,
+  ProjectOutlined,
   QuestionCircleFilled,
   UserOutlined,
 } from "@ant-design/icons";
@@ -17,11 +18,17 @@ import { FaStopwatch } from "@react-icons/all-files/fa/FaStopwatch";
 import { SiBuymeacoffee } from "react-icons/si";
 import { RiTimerFlashLine } from "react-icons/ri";
 import { MdOutlineTimerOff } from "react-icons/md";
+import { BiTimer } from "react-icons/bi";
+import { MdOutlineDashboardCustomize } from "react-icons/md";
+import { TbReportSearch } from "react-icons/tb";
+import { GrProjects } from "react-icons/gr";
+import { AiOutlineTeam } from "react-icons/ai";
+import { IoMdSettings } from "react-icons/io";
 
 import { useDispatch, useSelector } from "react-redux";
-import { startTimer } from "../../redux/Timer/TimerActions";
+import { startBreak, startTimer } from "../../redux/Timer/TimerActions";
 
-import { Form, message, Modal, Space, Table, Tag } from "antd";
+import { Button, Form, message, Modal, Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import {
   BreakRow,
@@ -62,7 +69,7 @@ const HomePage = () => {
 
   const [showAll, setShowAll] = useState(false);
   const [breaks, setBreaks] = useState(false);
-  const [current, setCurrent] = useState<{}[]>([
+  const [current, setCurrent] = useState<{}>([
     {
       currentDate: "",
       loggedInAt: "",
@@ -70,7 +77,7 @@ const HomePage = () => {
   ]);
 
   const [totalLoggedInTime, setTotalLoggedInTime] = useState<any>(null);
-  const [totalBreaksTime, setTotalBreaksTime] = useState<any>(null);
+  const [totalBreaksTime, setTotalBreaksTime] = useState<any>("00:00:00");
 
   const [fullDay, setFullDay] = useState("08:00:00");
   const [halfDay, setHalfDay] = useState("04:30:00");
@@ -107,22 +114,22 @@ const HomePage = () => {
   const data: DataType[] = [
     {
       key: "1",
-      name: "Lunch",
-      age: "Test",
+      name: "--",
+      age: "--",
       address: "35m",
       tags: ["nice", "developer"],
     },
     {
       key: "2",
-      name: "Coffee",
-      age: "Test Coffee",
+      name: "--",
+      age: "--",
       address: "20m",
       tags: ["loser"],
     },
     {
       key: "3",
-      name: "Fun",
-      age: "Test Fun",
+      name: "--",
+      age: "--",
       address: "10m",
       tags: ["cool", "teacher"],
     },
@@ -139,7 +146,7 @@ const HomePage = () => {
       hour12: true,
     }).format(new Date());
     const [CDate, CTime] = xx.split(",");
-    setCurrent([{ currentDate: CDate }, { loggedInAt: CTime }]);
+    setCurrent({ currentDate: CDate, loggedInAt: CTime });
   }, []);
 
   // console.log(current)
@@ -186,7 +193,7 @@ const HomePage = () => {
     // Convert the result back to a time value in the format "HH:MM:SS"
     // return seconds1 < seconds2;
     if (seconds1 < seconds2 === false) {
-      return "less Time";
+      return "less ";
     } else if (seconds1 <= seconds2 === true) {
       return "Okay";
     }
@@ -206,17 +213,20 @@ const HomePage = () => {
     }${minutes}m:${sec < 10 ? "0" : ""}${sec}s`;
   }
 
-     const timeComponents2 = totalBreaksTime?.split(":");
+  const timeComponents2 = totalBreaksTime?.split(":");
+
+  // console.log(timeComponents2);
+
   // Extract the minutes from the time components
   let minutes22 = timeComponents2?.[1];
-  let seconds22 = timeComponents2?.[2]
+  let seconds22 = timeComponents2?.[2];
   // Add a leading zero if necessary
   if (minutes22?.length < 2) {
     minutes22 = "0" + minutes22;
   }
   if (seconds22?.length < 2) {
     seconds22 = "0" + seconds22;
-  } 
+  }
 
   // :::::::::::::::::::  TIME COMPARISION FUNCTIONS  ::::::::::::::::::::::
 
@@ -224,7 +234,7 @@ const HomePage = () => {
   // console.log(compareTime("08:00:00", "08:00:01")); // Outputs "3:40"
 
   // console.log("totalLoggedInTime  --- ", totalLoggedInTime)
-  // console.log("totalLoggedInTime  --- ", totalBreaksTime)
+  // console.log("totalBreaksTime  --- ", totalBreaksTime)
 
   // :::::::::::::::::::: ON CLICK HANDLER FOR START AND STOP TIMER
   const handleStartLoginTimer = () => {
@@ -244,7 +254,7 @@ const HomePage = () => {
     setCompared(compareTime(halfDay, totalLoggedInTime));
     // setShowAll(false);
     // stopLoginTimer();
-    stopBreaksTimer();
+    // stopBreaksTimer();
     // showConfirm();
   };
   // :::::::::::::::::::: ON CLICK HANDLER FOR START AND STOP TIMER
@@ -253,6 +263,7 @@ const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { confirm } = Modal;
   console.log();
+
   // Taking some time set the loggedin time
   const showConfirm = () => {
     confirm({
@@ -305,7 +316,7 @@ const HomePage = () => {
     stopBreaksTimer();
     stopLoginTimer();
 
-    
+    stopBreaksTimer();
 
     setTimeout(() => {
       setShowAll(false);
@@ -314,7 +325,6 @@ const HomePage = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    console.log("cancel Clicked");
   };
 
   // MODALS
@@ -325,13 +335,25 @@ const HomePage = () => {
     startBreaksTimer();
     stopLoginTimer();
     setTotalLoggedInTime(formatLoginTimer());
+    // startBreak()
   };
+  const [first, setFirst] = useState(123);
+
   const handleStopBreaksTimer = () => {
     setBreaks(!breaks);
     stopBreaksTimer();
     setTotalBreaksTime(formatBreaksTimer());
     startLoginTimer();
+    setFirst(234);
+
+    dispatch(startBreak(totalBreaksTime));
   };
+
+  // useEffect(() => {
+  //   dispatch(startBreak(totalBreaksTime));
+  // }, [totalBreaksTime]);
+
+  // console.log(totalBreaksTime)
   // :::::::::::::::::::: ON CLICK HANDLER FOR START AND STOP BREAK TIMER
 
   // console.log("total logged in time --", totalLoggedInTime);
@@ -429,7 +451,7 @@ const HomePage = () => {
   const [auth, setAuth] = useState(false);
   const [form22] = Form.useForm();
 
-  const Head = "Hey are you sure you want to Stop for today ?"
+  const Head = "Hey are you sure you want to Stop for today ?";
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
@@ -451,30 +473,41 @@ const HomePage = () => {
                 <NavItems>
                   <NavItem>
                     <NavIcon>
-                      <MdWork style={{ color: "#2fa1f8" }} />
+                      <BiTimer style={{ color: "#29a9df" }} />
                     </NavIcon>
                     <NavItemName style={{ color: "#2fa1f8" }}>
                       Time Tracker
                     </NavItemName>
                   </NavItem>
-
                   <NavItem>
                     <NavIcon>
-                      <MdWork />
+                      <MdOutlineDashboardCustomize />
                     </NavIcon>
                     <NavItemName>Dashboard</NavItemName>
                   </NavItem>
                   <NavItem>
                     <NavIcon>
-                      <MdWork />
+                      <TbReportSearch />
                     </NavIcon>
                     <NavItemName>Reports</NavItemName>
                   </NavItem>
                   <NavItem>
                     <NavIcon>
-                      <MdWork />
+                      <ProjectOutlined style={{}} />
+                    </NavIcon>
+                    <NavItemName>Projects</NavItemName>
+                  </NavItem>
+                  <NavItem>
+                    <NavIcon>
+                      <AiOutlineTeam />
                     </NavIcon>
                     <NavItemName>Team</NavItemName>
+                  </NavItem>
+                  <NavItem>
+                    <NavIcon>
+                      <IoMdSettings />
+                    </NavIcon>
+                    <NavItemName>Settings</NavItemName>
                   </NavItem>
                 </NavItems>
               </Sidebar>
@@ -503,7 +536,7 @@ const HomePage = () => {
                 <ContentBody>
                   {showAll ? (
                     <>
-                      <ContentCard>
+                      <ContentCard style={{ cursor: "default" }}>
                         <CardIcon className="icon">
                           <RiTimerFlashLine />
                         </CardIcon>
@@ -544,10 +577,7 @@ const HomePage = () => {
                       </ContentCard>
                     </>
                   ) : (
-                    <ContentCard
-                      
-                      onClick={handleStartLoginTimer}
-                    >
+                    <ContentCard onClick={handleStartLoginTimer}>
                       <CardIcon className="icon">
                         <RiTimerFlashLine />
                       </CardIcon>
@@ -585,9 +615,10 @@ const HomePage = () => {
                   </>
                 )}
               </Content>
+
               <Modal
                 // title={<ExclamationCircleFilled />}
-                title = {Head}
+                title={Head}
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
@@ -595,17 +626,19 @@ const HomePage = () => {
                 okText="Stop Anyway"
               >
                 {totalLoggedInTime < halfDay && (
-                  <p style={{ color: "#484848", fontSize: "20px" }}>
-                    Hey ! Your Total Time Logged for Today is{" "}
-                    {totalLoggedInTime} which is {compared} half day, Logged in
-                    hours will not be counted as Half Day. Stop Anyway !
+                  <p style={{ color: "#484848", fontSize: "18px" }}>
+                    Hey ! Your total time logged for today is{" "}
+                    {totalLoggedInTime} which is {compared} than half day,
+                    logged in hours this will not be counted as half day. Stop
+                    Anyway !
                   </p>
                 )}
                 {totalLoggedInTime > halfDay && totalLoggedInTime < fullDay && (
-                  <p style={{ color: "#484848", fontSize: "20px" }}>
-                    Hey ! Your Total Logged in Time is {totalLoggedInTime} which
-                    is {compared} half day, Logged in hours will be counted as
-                    Half Day. Stop Anyway !
+                  <p style={{ color: "#484848", fontSize: "18px" }}>
+                    Hey ! Your total time logged for today is{" "}
+                    {totalLoggedInTime} which is {compared} than full day day,
+                    logged in hours this will not be counted as half day. Stop
+                    Anyway !
                   </p>
                 )}
                 {totalLoggedInTime >= fullDay && (

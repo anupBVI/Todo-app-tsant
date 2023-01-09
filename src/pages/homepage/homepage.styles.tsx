@@ -18,6 +18,7 @@ export const Container = styled.div`
   border-radius: 16px;
   padding: 12px;
   gap: 1rem;
+  
 `;
 export const Sidebar = styled.div`
   flex: 1;
@@ -31,8 +32,8 @@ export const NavItems = styled.div`
 
 export const NavItem = styled.div`
   display: flex;
-  gap: 5px;
-  padding: 4px 10px;
+  gap: 15px;
+  padding: 7px 10px;
   align-items: center;
   cursor: pointer;
   border-radius: 12px;

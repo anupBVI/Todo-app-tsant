@@ -66,7 +66,7 @@ const TodoReducer = (state = initialState, action: any) => {
           id: uuidv4(),
           title: action.payload.title,
           description: action.payload.description,
-          url: action.payload.url,
+          url: action.payload.url,  
           isCompleted: false,
         });
       }
