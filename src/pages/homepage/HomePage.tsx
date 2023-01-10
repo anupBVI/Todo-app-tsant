@@ -412,6 +412,7 @@ const HomePage = () => {
       clearInterval(breaksIntervalId);
       setBreaksIntervalId(null);
       setIsBreaksRunning(false);
+      setBreaksTimer(0)
     }
   };
 
