@@ -57,7 +57,7 @@ const Footer = styled.div`
 `
 
 const Login: any = (props: any) => {
-  const { form22, onFinish } = props;
+  const { formLogin, onFinish } = props;
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -78,7 +78,7 @@ const Login: any = (props: any) => {
           <Body>
             <Form
               style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-              form={form22}
+              form={formLogin}
               name="basic"
               labelCol={{ span: 8 }}
               wrapperCol={{ span: 16 }}
@@ -129,3 +129,5 @@ const Login: any = (props: any) => {
 };
 
 export default Login;
+
+

@@ -210,8 +210,9 @@ export const Right = styled.div`
 `;
 
 export const RightIcon = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  padding:20px;
   border-radius: 50%;
   background: #e8e8e8;
   display: flex;
@@ -223,7 +224,7 @@ export const RightIcon = styled.div`
   }
 `;
 
-export const BreakRow = styled.div`
+export const BreakSection = styled.div`
   background: #ffffff;
   padding: 1rem;
   border-radius: 12px;

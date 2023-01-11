@@ -26,10 +26,11 @@ export const timerSlice = createSlice({
       console.log("IN REDUCER", action.payload);
 
       const newBreakTime = [
-        ...state.currentTracking.Totalbreaks,
-        { break: action.payload },
+        // ...state.currentTracking.Totalbreaks,
+        // // { break: action.payload },
+        ...action.payload,
       ];
-    //   console.log("NEW BREAK", newBreakTime, state.currentTracking.Totalbreak);
+      //   console.log("NEW BREAK", newBreakTime, state.currentTracking.Totalbreak);
       state.currentTracking = {
         ...state.currentTracking,
         Totalbreaks: newBreakTime,
@@ -40,4 +41,3 @@ export const timerSlice = createSlice({
 
 export const { startTimer2, logBreaks } = timerSlice.actions;
 export default timerSlice.reducer;
-

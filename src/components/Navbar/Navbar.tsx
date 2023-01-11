@@ -59,7 +59,7 @@ const Navbar:any = () => {
         <Col className="gutter-row" span={24}>
           <div className="content">
             <NavLink
-              to="/"
+              to="/home"
             >
               <UserOutlined style={{ fontSize: "2rem", color: "#0f5070" }} />
             </NavLink>

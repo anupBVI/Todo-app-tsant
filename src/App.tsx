@@ -15,7 +15,8 @@ import Page4 from "./pages/page4";
 import { Provider } from "react-redux";
 // import store from "./redux/store";
 import HomePage from "./pages/homepage/HomePage";
-import {store} from "./toolkit/store"
+import { store } from "./toolkit/store";
+import Dashboard from "./components/Dashboard";
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,7 +35,10 @@ const App = () => {
             {Nav && <Navbar />}
             <div className="right">
               <Routes>
-                <Route path="/" element={<HomePage />} />
+                {/* <Route path="/" element={<HomePage />}/> */}
+                <Route path="/" element={<HomePage />}>
+                  {/* <Route path="dashboard" element={<Dashboard />} /> */}
+                </Route>
                 <Route path="/todohome" element={<Home />} />
                 <Route path="/new" element={<New />} />
                 <Route path="/new3" element={<Page3 />} />
