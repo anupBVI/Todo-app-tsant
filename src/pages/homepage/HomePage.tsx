@@ -18,7 +18,7 @@ import {
   Wrapper,
 } from "./homepage.styles";
 import Login from "./Login";
-import { logBreaks, startTimer2 } from "../../toolkit/reducers/TimerReducer";
+import { logBreaks, setAuthorization, startTimer, stopBreak } from "../../toolkit/reducers/TimerReducer";
 import SideBar from "./Sidebar/SideBar";
 import Card from "./Card";
 import TopRow from "./TopRow";
@@ -44,8 +44,8 @@ const HomePage = () => {
   const [totalLoggedInTime, setTotalLoggedInTime] = useState<any>(null);
   const [totalBreaksTime, setTotalBreaksTime] = useState<any>("00:00:00");
 
-  const [fullDay, setFullDay] = useState("00:02:00");
-  const [halfDay, setHalfDay] = useState("00:01:00");
+  const [fullDay, setFullDay] = useState("09:00:00");
+  const [halfDay, setHalfDay] = useState("05:00:00");
   const [compared, setCompared] = useState<any>(null);
 
   // LOGIN TIMER
@@ -62,7 +62,7 @@ const HomePage = () => {
   const [auth, setAuth] = useState(false);
   const [formLogin] = Form.useForm();
   const [formBreak] = Form.useForm();
-
+  
   // START BREAK TIMER MODAL 
   const [isModalOpenBreak, setIsModalOpenBreak] = useState(false);
   const HeadBreak = "Please fill the break Details";
@@ -72,7 +72,9 @@ const HomePage = () => {
   const Head = "Hey are you sure you want to Stop for today ?";
 
   const dispatch = useDispatch();
+
   const timerState = useSelector((state: any) => state.timer);
+  const {isAuth,currentDate } = timerState.currentTracking
 
   const breakLogs: any = timerState.currentTracking.Totalbreaks.map(
     (items: any) => {
@@ -248,7 +250,8 @@ const HomePage = () => {
     stopBreaksTimer();
     setBreaks(false);
 
-    dispatch(startTimer2(current));
+
+    dispatch(startTimer(current));
   };
 
   const [total, setTotal] = useState("00:00:00")  
@@ -263,8 +266,8 @@ const HomePage = () => {
     // stopBreaksTimer();
     // showConfirm();
        console.log(addTimes(totalLoggedInTime , TotalBreakTime)) 
-
        setTotal(addTimes(totalLoggedInTime , TotalBreakTime))
+
   };
   // :::::::::::::::::::: ON CLICK HANDLER FOR START AND STOP TIMER
 
@@ -282,6 +285,9 @@ const HomePage = () => {
     setIsModalOpenBreak(false);
 
     setBreaks(true);
+    dispatch(stopBreak(true))
+    // dispatch
+
     startBreaksTimer();
     stopLoginTimer();
     setTotalLoggedInTime(formatLoginTimer());
@@ -294,6 +300,7 @@ const HomePage = () => {
 
   const handleOkBreak = () => {
     setIsModalOpenBreak(false);
+
     formBreak.resetFields();
   };
   const handleCancelBreak = () => {
@@ -316,6 +323,8 @@ const HomePage = () => {
 
     stopBreaksTimer();
     // setTotalBreaksTime(formatBreaksTimer());
+
+
 
     setTimeout(() => {
       setShowAll(false);
@@ -462,8 +471,12 @@ const HomePage = () => {
     console.log("Success:", values);
     formLogin.resetFields();
     openMessage("Logging in", "Logged in Successfully");
+
+
+    
     setTimeout(() => {
-      setAuth(true);
+      // dispatch(setAuthorization(true))
+      setAuth(true)
     }, 1000);
   };
   // LOGIN
@@ -556,7 +569,7 @@ const HomePage = () => {
                 halfDay={halfDay}
                 fullDay={fullDay}
                 compared={compared}
-                // resultant = {resultant}
+                total = {total}
               />
               {/* ::::::  LOGIN TIMER MODAL ::::::::::::*/}
 

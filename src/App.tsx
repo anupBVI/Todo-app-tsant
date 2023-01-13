@@ -15,8 +15,9 @@ import Page4 from "./pages/page4";
 import { Provider } from "react-redux";
 // import store from "./redux/store";
 import HomePage from "./pages/homepage/HomePage";
-import { store } from "./toolkit/store";
+// import { store } from "./toolkit/store";
 import Dashboard from "./components/Dashboard";
+import store from "./redux/store";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ const Wrapper = styled.div`
 `;
 
 const App = () => {
-  const [Nav, setNav] = useState(false);
+  const [Nav, setNav] = useState(true);
   return (
     <Provider store={store}>
       <ThemeProvider theme={Theme}>
@@ -35,13 +36,11 @@ const App = () => {
             {Nav && <Navbar />}
             <div className="right">
               <Routes>
-                {/* <Route path="/" element={<HomePage />}/> */}
-                <Route path="/" element={<HomePage />}>
-                  {/* <Route path="dashboard" element={<Dashboard />} /> */}
-                </Route>
-                <Route path="/todohome" element={<Home />} />
+                {/* <Route path="/" element={<HomePage />}> */}
+                {/* </Route> */}
+                <Route path="/" element={<Home />} />
                 <Route path="/new" element={<New />} />
-                <Route path="/new3" element={<Page3 />} />
+                {/* <Route path="/new3" element={<Page3 />} /> */}
                 <Route path="/new4" element={<Page4 />} />
               </Routes>
               <div className="footer"></div>
@@ -54,3 +53,33 @@ const App = () => {
 };
 
 export default App;
+
+
+
+
+
+// import { Route, Redirect } from "react-router-dom";
+
+// function PrivateRoute({ component: Component, ...rest }) {
+//   const isAuthenticated = useAuth(); // a custom hook to check if the user is authenticated
+
+//   return (
+//     <Route
+//       {...rest}
+//       render={(props) =>
+//         isAuthenticated ? (
+//           <Component {...props} />
+//         ) : (
+//           <Redirect to={{ pathname: "/login" }} />
+//         )
+//       }
+//     />
+//   );
+// }
+
+
+{/* <Switch>
+  <Route path="/login" component={LoginPage} />
+  <PrivateRoute path="/profile" component={ProfilePage} />
+  <Redirect to="/" />
+</Switch> */}

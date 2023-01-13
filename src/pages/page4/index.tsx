@@ -23,7 +23,7 @@ const Page4: FC = (props) => {
   // const { Panel } = Collapse;
 
   const [categoryList, setCategoryList] = useState(
-    state.map((item: any) => {
+    state?.map((item: any) => {
       return { name: item.categoryN, icon: item.icon };
     })
   );

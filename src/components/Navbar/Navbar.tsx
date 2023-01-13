@@ -59,7 +59,7 @@ const Navbar:any = () => {
         <Col className="gutter-row" span={24}>
           <div className="content">
             <NavLink
-              to="/home"
+              to="/"
             >
               <UserOutlined style={{ fontSize: "2rem", color: "#0f5070" }} />
             </NavLink>
@@ -79,7 +79,7 @@ const Navbar:any = () => {
           </div>
         </Col>
 
-        <Col className="gutter-row" span={24}>
+        {/* <Col className="gutter-row" span={24}>
           <div className="content">
             <NavLink
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -88,7 +88,8 @@ const Navbar:any = () => {
               <AppstoreOutlined style={{ fontSize: "2rem" }} />
             </NavLink>
           </div>
-        </Col>
+        </Col> */}
+
         <Col className="gutter-row" span={24}>
           <div className="content">
             <NavLink
@@ -100,7 +101,7 @@ const Navbar:any = () => {
             </NavLink>
           </div>
         </Col>
-        <Col className="gutter-row" span={24}>
+        {/* <Col className="gutter-row" span={24}>
           <div className="content">
             <NavLink
               to="/new3"
@@ -109,7 +110,7 @@ const Navbar:any = () => {
               <BankOutlined style={{ fontSize: "2rem" }} />
             </NavLink>
           </div>
-        </Col>
+        </Col> */}
         <Col className="gutter-row" span={24}>
           <div className="content">
             <NavLink

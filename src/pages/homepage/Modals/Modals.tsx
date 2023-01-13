@@ -11,6 +11,7 @@ interface LoginTimerModalProps {
   halfDay: string;
   fullDay: string;
   compared: string;
+  total:string
 //   resultant :string
 }
 
@@ -24,13 +25,10 @@ export const LoginTimerModal = (props: LoginTimerModalProps) => {
     halfDay,
     fullDay,
     compared,
-    // resultant
+    total
   } = props;
 
-  const handleMod = () => {
-    // alert("btn clicked")
-    // handleCancel()
-  };
+
   return (
     <Modal
       title={Head}
@@ -45,14 +43,14 @@ export const LoginTimerModal = (props: LoginTimerModalProps) => {
         <p style={{ color: "#484848", fontSize: "18px" }}>
             {/* {resultant} */}
             <br />
-          Hey ! Your total time logged for today is {totalLoggedInTime} which is{" "}
+          Hey ! Your total time logged for today is {total} which is{" "}
           {compared} than half day, logged in hours will not be counted as half
           day. Stop Anyway !
         </p>
       )}
       {totalLoggedInTime > halfDay && totalLoggedInTime < fullDay && (
         <p style={{ color: "#484848", fontSize: "18px" }}>
-          Hey ! Your total time logged for today is {totalLoggedInTime} which is{" "}
+          Hey ! Your total time logged for today is {total} which is{" "}
           {compared} than full day, logged in hours will be counted as half day.
           Stop Anyway !
         </p>
